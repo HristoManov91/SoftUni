@@ -2,12 +2,12 @@ import java.util.Scanner;
 
 public class PrintNumbersInReverseOrder {
     public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-        int n = Integer.parseInt(scan.nextLine());
-        String[] numbers = new String[n];
+        Scanner scanner = new Scanner(System.in);
+        int countNumber = Integer.parseInt(scanner.nextLine());
 
-        for (int i = 0; i < n; i++) {
-            String num = scan.nextLine();
+        String[] numbers = new String[countNumber];
+        for (int i = 0; i < countNumber; i++) {
+            String num = scanner.nextLine();
             numbers[i] = num;
         }
         for (int i = numbers.length - 1; i >= 0 ; i--) {

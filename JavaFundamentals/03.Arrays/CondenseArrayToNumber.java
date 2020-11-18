@@ -1,19 +1,20 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class CondenseArrayToNumber {
     public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-
-        int[] array = Arrays.stream(scan.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
-
-        while (array.length > 1) {
-            int[] condense = new int[array.length - 1];
-            for (int i = 0; i < condense.length; i++) {
-                condense[i] = array[i] + array[i + 1];
+        Scanner scanner = new Scanner(System.in);
+        List<Integer> numbers = Arrays.stream(scanner.nextLine().split(" ")).map(Integer::parseInt)
+                .collect(Collectors.toList());
+        while (!(numbers.size() == 1)) {
+            for (int i = 0; i < numbers.size() - 1; i++) {
+                numbers.set(i , numbers.get(i) + numbers.get(i + 1));
             }
-            array = condense;
+            numbers.remove(numbers.size() - 1);
         }
-        System.out.println(array[0]);
+        System.out.println(numbers.get(0));
     }
 }
