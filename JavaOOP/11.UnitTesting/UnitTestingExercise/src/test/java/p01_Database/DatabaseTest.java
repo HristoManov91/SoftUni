@@ -1,22 +1,27 @@
 package p01_Database;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import javax.naming.OperationNotSupportedException;
 
 public class DatabaseTest {
+    private Database database;
+    private static final Integer[] NUMBERS = {5 , 13 , 15 , 45 , 28};
+
+    @Before
+    public void prepareDatabase() throws OperationNotSupportedException {
+        database = new Database(NUMBERS);
+    }
 
     @Test
-    public void testConstructorHasToCreateValidObject() throws OperationNotSupportedException {
-        Integer[] array = {5 , 13 , 15 , 45 , 28};
-        Database database = new Database(array);
-
-        Assert.assertEquals(5 , database.getElements().length);
+    public void testConstructorHasToCreateValidObject() {
+        Assert.assertEquals(NUMBERS.length , database.getElements().length);
         Integer[] arr = database.getElements();
 
         for (int i = 0; i < arr.length; i++) {
-            Assert.assertEquals(array[i] , arr[i]);
+            Assert.assertEquals(NUMBERS[i] , arr[i]);
         }
     }
 
@@ -34,34 +39,31 @@ public class DatabaseTest {
 
     @Test (expected = OperationNotSupportedException.class)
     public void testAddShouldThrowSupportedException() throws OperationNotSupportedException {
-        Integer[] numbers= {2 , 3 , 4 , 5};
-        Database database = new Database(numbers);
         database.add(null);
     }
 
     @Test
     public void testShouldAddElement() throws OperationNotSupportedException {
-        Integer[] numbers= {2 , 3 , 4 , 5};
-        Database database = new Database(numbers);
         database.add(17);
 
-        Assert.assertEquals(5 , database.getElements().length);
-        Assert.assertEquals(Integer.valueOf(17) , database.getElements()[4]);
+        Assert.assertEquals(NUMBERS.length + 1 , database.getElements().length);
+        Assert.assertEquals(Integer.valueOf(17) , database.getElements()[database.getElements().length - 1]);
     }
 
     @Test (expected = OperationNotSupportedException.class)
-    public void checkArraySizeExactlySixteenElement() throws OperationNotSupportedException {
-        Database database = new Database();
-
-        int size = database.getElements().length;
-
-        Assert.assertEquals(16 , size);
+    public void testRemoveShouldThrowExceptionWhenDataIsEmpty() throws OperationNotSupportedException {
+        for (int i = 0; i < NUMBERS.length; i++) {
+            database.remove();
+        }
+        database.remove();
     }
 
-    @Test (expected =  OperationNotSupportedException.class)
+    @Test
     public void checkRemoveLastElementInArray() throws OperationNotSupportedException {
-        Database database = new Database();
+        database.remove();
+        Assert.assertEquals(NUMBERS.length - 1 , database.getElements().length);
+        for (int i = 0; i < database.getElements().length; i++) {
+            Assert.assertEquals(database.getElements()[i] , NUMBERS[i]);
+        }
     }
-
-
 }
