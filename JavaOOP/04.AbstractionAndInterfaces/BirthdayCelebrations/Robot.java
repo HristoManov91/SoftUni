@@ -9,12 +9,13 @@ public class Robot implements Identifiable {
         this.model = model;
     }
 
+
     @Override
     public String getId() {
-        return id;
+        return this.id;
     }
 
     public String getModel() {
-        return model;
+        return this.model;
     }
 }

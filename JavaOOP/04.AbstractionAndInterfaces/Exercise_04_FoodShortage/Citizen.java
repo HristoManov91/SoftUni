@@ -1,22 +1,26 @@
-package BirthdayCelebrations;
+package Exercise_04_FoodShortage;
 
-public class Citizen implements Identifiable , Birthable {
+public class Citizen implements Person, Identifiable {
     private String name;
     private int age;
     private String id;
     private String birthDate;
+    private int food;
 
     public Citizen(String name, int age , String id , String birthDate) {
         this.name = name;
         this.age = age;
         this.id = id;
         this.birthDate = birthDate;
+        this.food = 0;
     }
 
+    @Override
     public String getName() {
         return this.name;
     }
 
+    @Override
     public int getAge() {
         return this.age;
     }
@@ -32,7 +36,12 @@ public class Citizen implements Identifiable , Birthable {
     }
 
     @Override
-    public String getBirthDate() {
-        return this.birthDate;
+    public void buyFood() {
+        this.food += 10;
+    }
+
+    @Override
+    public int getFood() {
+        return this.food;
     }
 }
