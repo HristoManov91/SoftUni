@@ -20,7 +20,7 @@ public abstract class BaseComponent extends BaseProduct implements Component{
 
     @Override
     public int getGeneration() {
-        return generation;
+        return this.generation;
     }
 
     @Override

@@ -118,7 +118,7 @@ public abstract class BaseComputer extends BaseProduct implements Computer {
         }
 
         sb.append(" ").append(String.format(COMPUTER_PERIPHERALS_TO_STRING , this.peripherals.size() ,
-                peripherals.stream().mapToDouble(Peripheral::getOverallPerformance).average().getAsDouble()))
+                peripherals.stream().mapToDouble(Peripheral::getOverallPerformance).average().orElse(0)))
                 .append(System.lineSeparator());
 
         for (Peripheral perip : peripherals) {
