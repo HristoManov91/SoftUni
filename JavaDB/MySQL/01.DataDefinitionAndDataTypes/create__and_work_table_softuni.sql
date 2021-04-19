@@ -69,4 +69,8 @@ ORDER BY `name`;
 SELECT `first_name` , `last_name` , `job_title` , `salary` FROM `employees`
 ORDER BY `salary` DESC;
 
+SET SQL_SAFE_UPDATES = 0;
 #18
+UPDATE `employees`
+SET `salary` = `salary` * 1.1;
+SELECT `salary` FROM `employees`
