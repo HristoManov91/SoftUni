@@ -6,7 +6,9 @@ CREATE TABLE departments (
 	name VARCHAR(50)
 );
 
-INSERT INTO departments(name) VALUES('Front Office'), ('Support'), ('Kitchen'), ('Other');
+INSERT INTO departments(name) 
+VALUES
+('Front Office'), ('Support'), ('Kitchen'), ('Other');
 
 CREATE TABLE employees (
 	id INT PRIMARY KEY AUTO_INCREMENT,
@@ -15,10 +17,13 @@ CREATE TABLE employees (
 	job_title VARCHAR(50) NOT NULL,
 	department_id INT NOT NULL,
 	salary DOUBLE NOT NULL,
-	CONSTRAINT `fk_department_id` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`)
+	CONSTRAINT `fk_department_id` 
+    FOREIGN KEY (`department_id`)
+    REFERENCES `departments` (`id`)
 );
 
-INSERT INTO `employees` (`first_name`,`last_name`, `job_title`,`department_id`,`salary`) VALUES
+INSERT INTO `employees` (`first_name`,`last_name`, `job_title`,`department_id`,`salary`) 
+VALUES
 	('John', 'Smith', 'Manager',1, 900.00),
 	('John', 'Johnson', 'Customer Service',2, 880.00),
 	('Smith', 'Johnson', 'Porter', 4, 1100.00),
@@ -36,7 +41,9 @@ CREATE TABLE rooms (
 	`type` VARCHAR(30)
 );
 
-INSERT INTO rooms(`type`) VALUES('apartment'), ('single room');
+INSERT INTO rooms(`type`)
+VALUES
+('apartment'), ('single room');
 
 CREATE TABLE clients (
 	id INT PRIMARY KEY AUTO_INCREMENT,
