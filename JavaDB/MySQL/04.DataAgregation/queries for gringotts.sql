@@ -12,7 +12,8 @@ ORDER BY `longest magic wand` , `deposit_group`;
 #4
 SELECT `deposit_group` FROM `wizzard_deposits`
 GROUP BY `deposit_group`
-HAVING MIN(AVG(`magic_wand_size`));
+ORDER BY AVG(`magic_wand_size`)
+LIMIT 1;
 
 #5
 SELECT `deposit_group` , SUM(`deposit_amount`) AS `total_sum` FROM `wizzard_deposits`
