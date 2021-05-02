@@ -57,5 +57,121 @@ VALUES
 (105 , 'Model 3' , 2),
 (106 , 'Nova' , 3);
 
+#3
+CREATE TABLE `students` (
+	`student_id` INT PRIMARY KEY AUTO_INCREMENT,
+    `name` VARCHAR(50) NOT NULL
+);
 
+CREATE TABLE `exams` (
+	`exam_id` INT PRIMARY KEY AUTO_INCREMENT,
+    `name` VARCHAR(30) NOT NULL
+);
 
+CREATE TABLE `students_exams` (
+	`student_id` INT,
+	`exam_id` INT,
+	CONSTRAINT pk_students_exams
+    PRIMARY KEY (`student_id` , `exam_id`),
+    
+    CONSTRAINT fk_students_exams_students
+    FOREIGN KEY (`student_id`)
+    REFERENCES `students`(`student_id`),
+    
+    CONSTRAINT fk_students_exams_exams
+    FOREIGN KEY (`exam_id`)
+    REFERENCES `exams`(`exam_id`)
+);
+
+INSERT INTO `students` (`name`)
+VALUES
+('Mila'), ('Toni') , ('Ron');
+
+INSERT INTO `exams`
+VALUES
+(101 , 'Spring MVC'),
+(102 , 'Neo4j'),
+(103 , 'Oracle 11g');
+
+INSERT INTO `students_exams`
+VALUES
+(1 , 101),
+(1 , 102),
+(2 , 101),
+(3 , 103),
+(2 , 102),
+(2 , 103);
+
+#4
+CREATE TABLE `teachers` (
+	`teacher_id` INT PRIMARY KEY AUTO_INCREMENT,
+    `name` VARCHAR(45),
+    `manager_id` INT
+);
+
+INSERT INTO `teachers`
+VALUES
+(101 , 'John' , NULL),
+(102 , 'Maya' , 106),
+(103 , 'Silvia' , 106),
+(104 , 'Ted' , 105),
+(105 , 'Mark' , 101),
+(106 , 'Greta' , 101);
+
+ALTER TABLE `teachers`
+ADD CONSTRAINT fk_teachers_teachers
+FOREIGN KEY (`manager_id`)
+REFERENCES `teachers`(`teacher_id`);
+
+#5
+CREATE TABLE `cities` (
+	`city_id` INT PRIMARY KEY,
+    `name` VARCHAR(50)
+);
+
+CREATE TABLE `customers` (
+	`customer_id` INT PRIMARY KEY,
+    `name` VARCHAR(50),
+    `birthday` DATE,
+    `city_id` INT,
+    CONSTRAINT fk_customers_cities
+    FOREIGN KEY (`city_id`)
+    REFERENCES `cities` (`city_id`)
+);
+
+CREATE TABLE `orders` (
+	`order_id` INT PRIMARY KEY,
+    `customer_id` INT,
+    CONSTRAINT fk_orders_customers
+    FOREIGN KEY (`customer_id`)
+    REFERENCES `customers`(`customer_id`)
+);
+
+CREATE TABLE `item_types` (
+	`item_type_id` INT PRIMARY KEY,
+    `name` VARCHAR(50)
+);
+
+CREATE TABLE `items` (
+	`item_id` INT PRIMARY KEY,
+    `name` VARCHAR(50),
+    `item_type_id` INT,
+    CONSTRAINT fk_items_items_types
+    FOREIGN KEY (`item_type_id`)
+    REFERENCES `item_types`(`item_type_id`)
+);
+
+CREATE TABLE `order_items` (
+	`item_id` INT,
+	`order_id` INT,
+    CONSTRAINT pk_order_items
+    PRIMARY KEY (`order_id` , `item_id`),
+    
+    CONSTRAINT fk_order_items_items
+    FOREIGN KEY (`item_id`)
+    REFERENCES `items`(`item_id`),
+    
+    CONSTRAINT fk_order_items_orders
+    FOREIGN KEY (`order_id`)
+    REFERENCES `orders`(`order_id`)
+);
