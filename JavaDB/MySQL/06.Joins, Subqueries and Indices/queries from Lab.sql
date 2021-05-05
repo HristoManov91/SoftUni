@@ -19,6 +19,6 @@ SELECT `employee_id` , `first_name` , `last_name` , `department_id` , `salary` F
 WHERE `manager_id` IS NULL;
 
 #4
-SELECT COUNT(e.`employee_id`) AS 'count' FROM `employees` AS 'e'
+SELECT COUNT(e.`employee_id`) AS 'count' FROM `employees` AS e
 WHERE e.`salary` > (SELECT AVG(`salary`) AS 'average_salary' FROM `employees`);
 
