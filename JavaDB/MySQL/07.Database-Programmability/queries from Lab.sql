@@ -14,13 +14,33 @@ DELIMITER ;
 SELECT ufn_count_employees_by_town('Sofia');
 
 #2
-DROP PROCEDURE IF EXISTS usp_select_employees_by_seniority()
+DROP PROCEDURE IF EXISTS `usp_raise_salary`()
 DELIMITER $$
-CREATE PROCEDURE usp_select_employees_by_seniority()
+CREATE PROCEDURE `usp_raise_salaries`( IN department_name VARCHAR(50))
 BEGIN
-	SELECT employee_id FROM employees
-	WHERE ROUND(DATEDIFF(NOW() , hire_date) / 365.25) < 15;
+	UPDATE `employees` JOIN `departments` AS d USING(`department_id`)
+    SET `salary` = `salary` * 1.05
+    WHERE d.name = department_name;
 END $$
 DELIMITER ;
 
-CALL usp_select_employees_by_seniority();
+CALL usp_raise_salaries('Finance');
+
+#3
+DROP PROCEDURE IF EXISTS `procedure usp_raise_salary_by_id`()
+DELIMITER //
+CREATE PROCEDURE usp_raise_salary_by_id(emp_id INT) 
+BEGIN
+	START TRANSACTION;
+    IF((SELECT COUNT(*) FROM employees WHERE employee_id = emp_id) = 0)
+    THEN ROLLBACK;
+    ELSE
+		UPDATE employees
+        SET salary = salary * 1.05
+        WHERE employee_id = emp_id;
+        COMMIT;
+	END IF;
+END//
+DELIMITER ;
+
+#4
