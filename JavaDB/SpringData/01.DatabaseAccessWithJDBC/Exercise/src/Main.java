@@ -10,6 +10,10 @@ public class Main {
 
         //homework.getMinionNamesEx3();
 
-        homework.addMinionEx4();
+        //homework.addMinionEx4();
+
+        //homework.changeTownNameCasingEx5();
+
+        homework.increaseAgeWithStoreProcedure();
     }
 }

@@ -2,6 +2,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class Homework {
@@ -55,12 +57,12 @@ public class Homework {
                 "WHERE mv.villain_id = ?";
 
         PreparedStatement statement = connection.prepareStatement(query);
-        statement.setInt(1 , villainId);
+        statement.setInt(1, villainId);
         ResultSet rs = statement.executeQuery();
 
         int count = 1;
-        while (rs.next()){
-            System.out.printf("%d. %s %d%n", count++ , rs.getString("name") , rs.getInt("age"));
+        while (rs.next()) {
+            System.out.printf("%d. %s %d%n", count++, rs.getString("name"), rs.getInt("age"));
         }
     }
 
@@ -77,39 +79,45 @@ public class Homework {
 
     public void addMinionEx4() throws IOException, SQLException {
         System.out.println("Enter minions info: name , age , town_name");
+        reader = new BufferedReader(new InputStreamReader(System.in));
         String[] minionInfo = reader.readLine().split("\\s+");
         String minionName = minionInfo[0];
         int minionAge = Integer.parseInt(minionInfo[1]);
         String townName = minionInfo[2];
 
         int townId = getEntityIdByName(townName, "towns");
-        if (townId == -1){
+        if (townId == -1) {
             insertEntityInTowns(townName);
             System.out.printf("Town %s was added to the database.%n", townName);
         }
 
-        int minionId = getEntityIdByName(minionName , "minions");
-        if (minionId == -1){
-            insertMinionInMinions(minionName , minionAge , getEntityIdByName(townName , "towns"));
+        int minionId = getEntityIdByName(minionName, "minions");
+        if (minionId == -1) {
+            insertMinionInMinions(minionName, minionAge, getEntityIdByName(townName, "towns"));
         }
 
         System.out.println("Enter villain name:");
         String villainName = reader.readLine();
 
-        int villainId = getEntityIdByName(villainName , "villains");
-        if (villainId == -1){
+        int villainId = getEntityIdByName(villainName, "villains");
+        if (villainId == -1) {
             insertEntityInVillains(villainName);
             System.out.printf("Villain %s was added to the database.%n", villainName);
         }
 
-        
+        String query = "INSERT INTO minions_villains(minion_id , villain_id) value (? , ?)";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setInt(1, getEntityIdByName(minionName, "minions"));
+        statement.setInt(2, getEntityIdByName(villainName, "villains"));
+        statement.execute();
+        System.out.printf("Successfully added %s to be minion of %s.", minionName, villainName);
     }
 
     private void insertEntityInVillains(String villainName) throws SQLException {
         String query = "INSERT INTO villains(name) value(?)";
 
         PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1 , villainName);
+        statement.setString(1, villainName);
         statement.execute();
     }
 
@@ -117,9 +125,9 @@ public class Homework {
         String query = "INSERT INTO minions(name , age , town_id) value(? , ? , ?)";
 
         PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1 , minionName);
-        statement.setInt(2 , minionAge);
-        statement.setInt(3 , townId);
+        statement.setString(1, minionName);
+        statement.setInt(2, minionAge);
+        statement.setInt(3, townId);
         statement.execute();
     }
 
@@ -127,7 +135,7 @@ public class Homework {
         String query = String.format("SELECT id FROM %s WHERE name = ?", tableName);
 
         PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1 , name);
+        statement.setString(1, name);
         ResultSet rs = statement.executeQuery();
 
         return rs.next() ? rs.getInt("id") : -1;
@@ -137,7 +145,45 @@ public class Homework {
         String query = "INSERT INTO towns(name) value(?)";
 
         PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1 , townName);
+        statement.setString(1, townName);
         statement.execute();
+    }
+
+    public void changeTownNameCasingEx5() throws IOException, SQLException {
+        reader = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Enter country name:");
+        String countryName = reader.readLine();
+        String query = "UPDATE towns SET name = UPPER(name) WHERE country = ?";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, countryName);
+        int townsAffected = statement.executeUpdate();
+        if (townsAffected == 0) {
+            System.out.println("No town names were affected.");
+        } else {
+            System.out.printf("%d town names were affected.%n", townsAffected);
+            String queryForUpdateCities = "SELECT name FROM towns WHERE country = ?";
+            statement = connection.prepareStatement(queryForUpdateCities);
+            statement.setString(1 , countryName);
+            ResultSet rs = statement.executeQuery();
+
+            List<String> cities = new ArrayList<>();
+            while (rs.next()){
+                cities.add(rs.getString("name"));
+            }
+            System.out.println(cities);
+        }
+    }
+
+    public void increaseAgeWithStoreProcedure() throws IOException, SQLException {
+        System.out.println("Enter minion id:");
+        reader = new BufferedReader(new InputStreamReader(System.in));
+        int minionId = Integer.parseInt(reader.readLine());
+
+        String query = "CALL usp_get_older(?)";
+
+        CallableStatement callableStatement = connection.prepareCall(query);
+        callableStatement.setInt(1 , minionId);
+        callableStatement.execute();
     }
 }
