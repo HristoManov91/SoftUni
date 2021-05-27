@@ -14,7 +14,7 @@ CREATE TABLE `towns`(
 
 #2
 ALTER TABLE `towns` 
-CHANGE COLUMN `town_id` `id` INT PRIMARY KEY AUTO_INCREMENT;
+CHANGE COLUMN `town_id` `id` INT AUTO_INCREMENT;
 
 ALTER TABLE `minions`
 ADD COLUMN `town_id` INT;
@@ -25,17 +25,17 @@ FOREIGN KEY (`town_id`)
 REFERENCES `towns`(`id`);
 
 #3
-INSERT INTO `towns` (`name`)
+INSERT INTO `towns`
 VALUES
-('Sofia'),
-('Plovdiv'),
-('Varna');
+(1 , 'Sofia'),
+(2 , 'Plovdiv'),
+(3 ,'Varna');
 
-INSERT INTO `minions` (`name` , `age` , `town_id`)
+INSERT INTO `minions`
 VALUES
-('Kevin', 22 , 1),
-('Bob', 15 , 3),
-('Steward', NULL , 2);
+(1 , 'Kevin', 22 , 1),
+(2 , 'Bob', 15 , 3),
+(3 , 'Steward', NULL , 2);
 
 #4
 TRUNCATE `minions`;
@@ -46,27 +46,23 @@ DROP TABLE `towns`;
 
 #6
 CREATE TABLE `people`(
-	`id` INT AUTO_INCREMENT,
+	`id` INT PRIMARY KEY AUTO_INCREMENT,
     `name` VARCHAR(200) NOT NULL,
     `picture` BLOB,
-    `height` FLOAT (3 , 2),
-    `weight` FLOAT (3 , 2),
+    `height` FLOAT ,
+    `weight` FLOAT ,
     `gender` CHAR(1) NOT NULL,
     `birthdate` DATE NOT NULL,
     `biography` TEXT
 );
 
-ALTER TABLE `people`
-ADD CONSTRAINT pk_id
-PRIMARY KEY(`id`);
-
 INSERT INTO `people`
 VALUES
-(1 , 'Hristo Manov' , NULL , 1.87 , 96.96 , 'm' , 1991-08-26 , 'SAFASFAS'),
-(2 , 'Georgi Manov' , NULL , 1.97 , 106.96 , 'm' , 1999-02-18 , 'SAFASFA'),
-(3 , 'Vladislava Manova' , NULL , 1.57 , 56.96 , 'f' , 1996-09-11 , 'safasfa'),
-(4 , 'Pesho Manov' , NULL , 1.67 , 66.96 , 'm' , 2001-02-01 , 'safsafasf'),
-(5 , 'Iordan Manov' , NULL , 1.77 , 76.96 , 'm' , 1995-11-19 , NULL);
+(1 , 'Hristo Manov' , NULL , 1.87 , 96.96 , 'm' , '1991-08-26' , 'SAFASFAS'),
+(2 , 'Georgi Manov' , NULL , 1.97 , 106.96 , 'm' , '1999-02-18' , 'SAFASFA'),
+(3 , 'Vladislava Manova' , NULL , 1.57 , 56.96 , 'f' , '1996-09-11' , 'safasfa'),
+(4 , 'Pesho Manov' , NULL , 1.67 , 66.96 , 'm' , '2001-02-01' , 'safsafasf'),
+(5 , 'Iordan Manov' , NULL , 1.77 , 76.96 , 'm' , '1995-11-19' , NULL);
 
 #7
 CREATE TABLE `users`(
@@ -103,7 +99,6 @@ ALTER TABLE `users`
 CHANGE COLUMN `username` `username` VARCHAR(30) NOT NULL UNIQUE ,
 DROP PRIMARY KEY,
 ADD PRIMARY KEY (`id`, `username`);
-
 
 #11
 CREATE SCHEMA `movies`;
@@ -165,19 +160,19 @@ VALUES
 
 INSERT INTO `categories`
 VALUES
-(1 , '' , 'ASDAFSSA'),
-(2 , '' , 'ASDAFSSA'),
-(3 , '' , 'ASDAFSSA'),
-(4 , '' , 'ASDAFSSA'),
-(5 , '' , 'ASDAFSSA');
+(1 , 'brbrbrbrbr' , 'ASDAFSSA'),
+(2 , 'vrvrvrvrv' , 'ASDAFSSA'),
+(3 , 'vrvrvrvr' , 'ASDAFSSA'),
+(4 , 'bttbtbtbt' , 'ASDAFSSA'),
+(5 , 'btbtbtbt' , 'ASDAFSSA');
 
 INSERT INTO `movies`
 VALUES
-(1 , 'Ted' , 5 , 2017 , 101.20 , 3 , 2 , 5.78 , 'asfasfafaf'),
-(2 , 'Ted2' , 4 , 2016 , 111.20 , 2 , 3 , 6.78 , 'asfaasdASDAsfafaf'),
-(3 , 'Ted3' , 3 , 2015 , 121.20 , 1 , 4 , 7.78 , 'asfaASDAsfafaf'),
-(4 , 'Ted4' , 2 , 2014 , 131.20 , 5 , 5 , 8.78 , 'ASDasfasfafaf'),
-(5 , 'Ted5' , 1 , 2013 , 141.20 , 4 , 1 , 9.78 , 'asfasfafafASD');
+(1 , 'Ted' , 5 , '2017-01-01' , 101.20 , 3 , 2 , 5.78 , 'asfasfafaf'),
+(2 , 'Ted2' , 4 , '2016-02-02' , 111.20 , 2 , 3 , 6.78 , 'asfaasdASDAsfafaf'),
+(3 , 'Ted3' , 3 , '2015-03-03' , 121.20 , 1 , 4 , 7.78 , 'asfaASDAsfafaf'),
+(4 , 'Ted4' , 2 , '2014-04-04' , 131.20 , 5 , 5 , 8.78 , 'ASDasfasfafaf'),
+(5 , 'Ted5' , 1 , '2013-05-05' , 141.20 , 4 , 1 , 9.78 , 'asfasfafafASD');
 
 #12
 CREATE SCHEMA `car_rental`;
@@ -185,10 +180,10 @@ CREATE SCHEMA `car_rental`;
 CREATE TABLE `categories`(
 	`id` INT PRIMARY KEY AUTO_INCREMENT,
     `category` VARCHAR(50) NOT NULL,
-    `daily_rate` DECIMAL ,
-    `weekly_rate` DECIMAL ,
-    `monthly_rate` DECIMAL ,
-    `weekend_rate` DECIMAL
+    `daily_rate` DOUBLE ,
+    `weekly_rate` DOUBLE ,
+    `monthly_rate` DOUBLE ,
+    `weekend_rate` DOUBLE
 );
 
 CREATE TABLE `cars`(
@@ -251,34 +246,39 @@ CREATE TABLE `rental_orders`(
 	`end_date` DATE NOT NULL,
 	`total_days` INT NOT NULL,
 	`rate_applied` VARCHAR(50) NOT NULL,
-	`tax_rate` DECIMAL NOT NULL,
+	`tax_rate` DOUBLE NOT NULL,
 	`order_status` VARCHAR(50),
 	`notes` TEXT
 );
 
 INSERT INTO `categories`(`category`, `daily_rate`, `weekly_rate`, `monthly_rate`, `weekend_rate`)
-VALUES('category', 10.5, 10.5, 10.5, 10.5),
+VALUES
+('category', 10.5, 10.5, 10.5, 10.5),
 ('category', 10.5, 10.5, 10.5, 10.5),
 ('category', 10.5, 10.5, 10.5, 10.5);
 
 INSERT INTO `cars`(`plate_number`, `make`, `model`, `car_year`, `category_id`, `doors`, `picture`, `car_condition`, `available`)
-VALUES ('CO 1234 CC', 'make', 'model', '2018', 1, 3, 'picture', 'car_condition', 'Yes'),
+VALUES 
+('CO 1234 CC', 'make', 'model', '2018', 1, 3, 'picture', 'car_condition', 'Yes'),
 ('C 1234 CC', 'make', 'model', '2018', 1, 3, 'picture', 'car_condition', 'Yes'),
 ('CA 1234 CC', 'make', 'model', '2018', 1, 3, 'picture', 'car_condition', 'Yes');
 
 INSERT INTO `employees`(`first_name`, `last_name`, `title`, `notes`)
-VALUES('first_name', 'last_name', 'title', 'notes'),
+VALUES
+('first_name', 'last_name', 'title', 'notes'),
 ('first_name', 'last_name', 'title', 'notes'),
 ('first_name', 'last_name', 'title', 'notes');
 
 INSERT INTO `customers`(`driver_licence_number`, `full_name`, `address`, `city`, `zip_code`, `notes`)
-VALUES ('1111111111111112', 'full_name', 'address', 'city', 1528, 'notes'),
+VALUES 
+('1111111111111112', 'full_name', 'address', 'city', 1528, 'notes'),
 ('1111111111111113', 'full_name', 'address', 'city', 1528, 'notes'),
 ('1111111111111114', 'full_name', 'address', 'city', 1528, 'notes');
 
 INSERT INTO `rental_orders` (`employee_id`, `customer_id`, `car_id`, `car_condition`, `tank_level`, `kilometrage_start`, `kilometrage_end`,
 							`total_kilometrage`, `start_date`, `end_date`, `total_days`, `rate_applied`, `tax_rate`, `order_status`, `notes`)
-VALUES (2, 1, 3, 'car_condition', 44.4, 100000, 100500, 100, '2018-01-02', '2018-01-18', 3, 'rate_applied', 20.5, 'order_status', 'notes'),
+VALUES 
+(2, 1, 3, 'car_condition', 44.4, 100000, 100500, 100, '2018-01-02', '2018-01-18', 3, 'rate_applied', 20.5, 'order_status', 'notes'),
 (2, 2, 3, 'car_condition', 44.4, 100000, 100500, 100, '2018-01-02', '2018-01-18', 3, 'rate_applied', 20.5, 'order_status', 'notes'),
 (2, 3, 3, 'car_condition', 44.4, 100000, 100500, 100, '2018-01-02', '2018-01-18', 3, 'rate_applied', 20.5, 'order_status', 'notes');
 
@@ -372,5 +372,5 @@ SET `salary` = `salary` * 1.10;
 SELECT `salary` FROM `employees`;
 
 #19
-
+TRUNCATE `occupancies`;
 #20
