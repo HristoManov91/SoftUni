@@ -96,49 +96,50 @@ MODIFY `last_login_time` DATETIME DEFAULT NOW();
 
 #10
 ALTER TABLE `users` 
-CHANGE COLUMN `username` `username` VARCHAR(30) NOT NULL UNIQUE ,
 DROP PRIMARY KEY,
-ADD PRIMARY KEY (`id`, `username`);
+CHANGE COLUMN `username` `username` VARCHAR(30) NOT NULL UNIQUE ,
+ADD CONSTRAINT pk_users
+PRIMARY KEY (`id`, `username`);
 
 #11
 CREATE SCHEMA `movies`;
 
 CREATE TABLE `directors`(
 	`id` INT PRIMARY KEY AUTO_INCREMENT,
-    `director_name` VARCHAR(50),
+    `director_name` VARCHAR(100) NOT NULL,
     `notes` TEXT
 );
 
 CREATE TABLE `genres`(
 	`id` INT PRIMARY KEY AUTO_INCREMENT,
-    `genre_name` VARCHAR(50),
+    `genre_name` VARCHAR(100) NOT NULL,
     `notes` TEXT
 );
 
 CREATE TABLE `categories`(
 	`id` INT PRIMARY KEY AUTO_INCREMENT,
-    `category_name` VARCHAR(50),
+    `category_name` VARCHAR(100) NOT NULL,
     `notes` TEXT
 );
 
 CREATE TABLE `movies`(
 	`id` INT AUTO_INCREMENT PRIMARY KEY,
-    `title` VARCHAR(100),
+    `title` VARCHAR(100) NOT NULL,
     `director_id` INT,
-    CONSTRAINT fk_movies_directors
-    FOREIGN KEY (`director_id`)
-    REFERENCES `directors`(`id`),
-    `copyright_year` DATE,
-    `length` DECIMAL(10,2),
+    -- CONSTRAINT fk_movies_directors
+--     FOREIGN KEY (`director_id`)
+--     REFERENCES `directors`(`id`),
+    `copyright_year` YEAR,
+    `length` DOUBLE,
     `genre_id` INT,
-    CONSTRAINT fk_movies_genres
-    FOREIGN KEY (`genre_id`)
-    REFERENCES `genres`(`id`),
+    -- CONSTRAINT fk_movies_genres
+--     FOREIGN KEY (`genre_id`)
+--     REFERENCES `genres`(`id`),
     `category_id` INT,
-    CONSTRAINT fk_movies_categories
-    FOREIGN KEY (`category_id`)
-    REFERENCES `categories`(`id`),
-    `rating` DECIMAL (10,2),
+    -- CONSTRAINT fk_movies_categories
+--     FOREIGN KEY (`category_id`)
+--     REFERENCES `categories`(`id`),
+    `rating` DOUBLE,
     `notes` TEXT
 );
 
@@ -150,13 +151,13 @@ VALUES
 (4 , 'Georgi Ivanov' , 'sdada'),
 (5 , 'Pesho Ivanov' , 'aasdasdf');
 
-INSERT INTO `genres`(`genre_name` , `notes`)
+INSERT INTO `genres`
 VALUES
-('acion' , 'asfasfas'),
-('comedy' , 'asfasfas'),
-('drama' , 'asfasfas'),
-('fantazy' , 'asfasfas'),
-('trilur' , 'asfasfas');
+(1 , 'acion' , 'asfasfas'),
+(2 , 'comedy' , 'asfasfas'),
+(3 , 'drama' , 'asfasfas'),
+(4 , 'fantazy' , 'asfasfas'),
+(5 , 'trilur' , 'asfasfas');
 
 INSERT INTO `categories`
 VALUES
@@ -168,11 +169,11 @@ VALUES
 
 INSERT INTO `movies`
 VALUES
-(1 , 'Ted' , 5 , '2017-01-01' , 101.20 , 3 , 2 , 5.78 , 'asfasfafaf'),
-(2 , 'Ted2' , 4 , '2016-02-02' , 111.20 , 2 , 3 , 6.78 , 'asfaasdASDAsfafaf'),
-(3 , 'Ted3' , 3 , '2015-03-03' , 121.20 , 1 , 4 , 7.78 , 'asfaASDAsfafaf'),
-(4 , 'Ted4' , 2 , '2014-04-04' , 131.20 , 5 , 5 , 8.78 , 'ASDasfasfafaf'),
-(5 , 'Ted5' , 1 , '2013-05-05' , 141.20 , 4 , 1 , 9.78 , 'asfasfafafASD');
+(1 , 'Ted' , 5 , '2017' , 101.20 , 3 , 2 , 5.78 , 'asfasfafaf'),
+(2 , 'Ted2' , 4 , '2016' , 111.20 , 2 , 3 , 6.78 , 'asfaasdASDAsfafaf'),
+(3 , 'Ted3' , 3 , '2015' , 121.20 , 1 , 4 , 7.78 , 'asfaASDAsfafaf'),
+(4 , 'Ted4' , 2 , '2014' , 131.20 , 5 , 5 , 8.78 , 'ASDasfasfafaf'),
+(5 , 'Ted5' , 1 , '2013' , 141.20 , 4 , 1 , 9.78 , 'asfasfafafASD');
 
 #12
 CREATE SCHEMA `car_rental`;
@@ -221,9 +222,6 @@ CREATE TABLE `customers`(
 );
 
 CREATE TABLE `rental_orders`(
-	/*id, employee_id, customer_id, car_id, car_condition, tank_level, kilometrage_start, 
-    kilometrage_end, total_kilometrage, start_date, end_date, total_days,
-    rate_applied, tax_rate, order_status, notes*/
     `id` INT PRIMARY KEY AUTO_INCREMENT,
     `employee_id` INT NOT NULL,
     CONSTRAINT fk_rental_orders_employees
@@ -337,7 +335,7 @@ VALUES
 ('Petar' , 'Petrov' , 'Petrov' , 'Senior Engineer' , 1 , '2004-03-02' , 4000.00),
 ('Maria' , 'Petrova' , 'Ivanova' , 'Intern' , 5 , '2016-08-28' , 525.25),
 ('Georgi' , 'Terziev' , 'Ivanov' , 'CEO' , 2 , '2007-12-09' , 3000.00),
-('Petar' , 'Pan' , 'Pan' , 'Intern' , 3 , '2016-08-28' , 599.88);
+('Peter' , 'Pan' , 'Pan' , 'Intern' , 3 , '2016-08-28' , 599.88);
 
 #15
 SELECT * FROM `towns`;
