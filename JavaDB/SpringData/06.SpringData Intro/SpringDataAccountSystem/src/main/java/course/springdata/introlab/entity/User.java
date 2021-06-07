@@ -18,8 +18,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Long id;
+    @NonNull
     private String username;
+    @NonNull
     private int age;
+
     @OneToMany(mappedBy = "user")
     private Set<Account> accounts = new HashSet<>();
+
 }
