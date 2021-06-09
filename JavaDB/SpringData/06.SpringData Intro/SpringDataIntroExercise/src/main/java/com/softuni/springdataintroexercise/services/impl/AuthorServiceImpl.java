@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
@@ -38,5 +41,25 @@ public class AuthorServiceImpl implements AuthorService {
 
             this.authorRepository.saveAndFlush(author);
         });
+    }
+
+    @Override
+    public int getCountAuthors() {
+        return (int) this.authorRepository.count();
+    }
+
+    @Override
+    public Author findAuthorById(Long id) {
+        return this.authorRepository.getById(id);
+    }
+
+    @Override
+    public List<Author> findAllAuthorsByCountOfBooks() {
+        return authorRepository.findAuthorByCountOfBook();
+    }
+
+    @Override
+    public Author getAuthorByName() {
+        return authorRepository.findAuthorByFirstNameEqualsAndLastNameEquals("George" , "Powell");
     }
 }
