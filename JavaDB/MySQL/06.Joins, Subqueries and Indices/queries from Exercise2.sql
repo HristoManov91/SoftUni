@@ -51,7 +51,7 @@ JOIN `employees_projects` AS ep
 ON e.`employee_id` = ep.`employee_id`
 JOIN `projects` AS p
 ON ep.`project_id` = p.`project_id`
-WHERE p.`start_date` > '2002/08/13' AND p.`end_date` IS NULL
+WHERE DATE(p.`start_date`) > '2002/08/13' AND p.`end_date` IS NULL
 ORDER BY e.`first_name` , p.`name`
 LIMIT 5;
 
@@ -119,10 +119,37 @@ ORDER BY c.`country_name`
 LIMIT 5;
 
 #15
-
+SELECT c.`continent_code` , c.`currency_code` , COUNT(*) AS `currency_usage` FROM `countries` AS c
+GROUP BY `continent_code` , `currency_code`
+HAVING `currency_usage` = (
+		SELECT COUNT(`country_code`) AS `coun` FROM `countries` AS c1
+        WHERE c1.`continent_code` = c.`continent_code`
+        GROUP BY `currency_code`
+        ORDER BY `coun` DESC
+        LIMIT 1
+        ) AND `currency_usage` > 1
+ORDER BY `continent_code` , `currency_code`;
 
 #16
 SELECT COUNT(*) AS `country_count` FROM `countries`
-WHERE `country_code` NOT IN (SELECT `country_code` FROM `mountains_countries`)
+WHERE `country_code` NOT IN (SELECT `country_code` FROM `mountains_countries`);
 
 #17
+SELECT 
+    c.`country_name`,
+    MAX(p.`elevation`) AS `highest_peak_elevation`,
+    MAX(r.`length`) AS `longest_river_length`
+FROM `countries` AS c
+JOIN `countries_rivers` AS cr
+ON c.`country_code` = cr.`country_code`
+JOIN `rivers` AS r
+ON cr.`river_id` = r.`id`
+JOIN `mountains_countries` AS mc
+ON c.`country_code` = mc.`country_code`
+JOIN `mountains` AS m
+ON m.`id` = mc.`mountain_id`
+JOIN `peaks` AS p
+ON p.`mountain_id` = m.`id`
+GROUP BY c.`country_code`
+ORDER BY `highest_peak_elevation` DESC , `longest_river_length` DESC , c.`country_name`
+LIMIT 5;
