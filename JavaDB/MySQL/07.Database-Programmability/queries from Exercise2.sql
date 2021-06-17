@@ -178,7 +178,23 @@ CALL `usp_withdraw_money`(1 , 1000);
 DELIMITER //
 CREATE PROCEDURE `usp_transfer_money`(`from_acc_id` INT , `to_acc_id` INT , `amount` DECIMAL(19,4))
 BEGIN
-	CALL `usp_withdraw_money`(`from_acc_id` , `amount`);
-    CALL `usp_deposit_money`(`to_acc_id` , `amount`);
+	START TRANSACTION;
+    IF (`amount` < 0 
+		OR (SELECT `balance` FROM `accounts` WHERE `from_acc_id` = `id`) < `amount`
+        OR `from_acc_id` NOT BETWEEN 1 AND (SELECT COUNT(*) FROM `accounts`)
+        OR `to_acc_id` NOT BETWEEN 1 AND (SELECT COUNT(*) FROM `accounts`))
+		THEN ROLLBACK;
+	ELSE
+		UPDATE `accounts`
+        SET `balance` = `balance` - `amount`
+        WHERE `id` = `from_acc_id`;
+        UPDATE `accounts`
+        SET `balance` = `balance` + `amount`
+        WHERE `id` = `to_acc_id`;
+	END IF;
 END//
 DELIMITER ;
+
+CALL `usp_transfer_money` (1 , 2 , 10);
+CALL `usp_transfer_money` (-1 , 2 , 10);
+
