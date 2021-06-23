@@ -142,7 +142,7 @@ public class Homework {
     }
 
     private void insertEntityInTowns(String townName) throws SQLException {
-        String query = "INSERT INTO towns(name) value(?)";
+        String query = "INSERT INTO towns(name) values(?)";
 
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, townName);
