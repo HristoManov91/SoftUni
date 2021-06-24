@@ -1,22 +1,20 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.sql.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Homework {
     private static final String CONNECTION_STRING = "jdbc:mysql://localhost:3306/";
-    private static final String MINIONS_TABLE_NAME = "minions_db";
+    private static final String MINIONS_DB = "minions_db";
 
     private Connection connection;
-    private Scanner scanner;
+    private Scanner scanner = new Scanner(System.in);
 
     public void setConnection(String username, String password) throws SQLException {
         Properties properties = new Properties();
         properties.setProperty("user", username);
         properties.setProperty("password", password);
 
-        connection = DriverManager.getConnection(CONNECTION_STRING + MINIONS_TABLE_NAME, properties);
+        connection = DriverManager.getConnection(CONNECTION_STRING + MINIONS_DB, properties);
     }
 
     // --------------------------- 2 ------------------------------
@@ -42,9 +40,7 @@ public class Homework {
     // --------------------------- 3 ------------------------------
 
     public void getMinionsNamesByVillainsIdEx3() throws SQLException {
-        scanner = new Scanner(System.in);
-
-        System.out.println("Enter villainId:");
+        System.out.println("Enter villain id:");
         int villainId = Integer.parseInt(scanner.nextLine());
 
         String villainName = getVillainNameById(villainId, "villains");
@@ -87,7 +83,6 @@ public class Homework {
     // --------------------------- 4 ------------------------------
 
     public void addMinionInDatabaseEx4() throws SQLException {
-        scanner = new Scanner(System.in);
         System.out.println("Enter minions info: name age town_name (with single space separator)");
         String[] minionInfo = scanner.nextLine().split("\\s+");
         String minionName = minionInfo[0];
@@ -164,18 +159,17 @@ public class Homework {
     // --------------------------- 5 ------------------------------
 
     public void changeTownNameCasingEx5() throws SQLException {
-        scanner = new Scanner(System.in);
         System.out.println("Enter country name:");
         String countryName = scanner.nextLine();
         String query = "UPDATE towns SET name = UPPER(name) WHERE country = ?";
 
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1 , countryName);
-        int townsNameAffected = statement.executeUpdate();
-        if(townsNameAffected == 0){
+        int townsCountAffected = statement.executeUpdate();
+        if(townsCountAffected == 0){
             System.out.println("No town names were affected.%n");
         } else {
-            System.out.printf("%d town names were affected.%n", townsNameAffected);
+            System.out.printf("%d town names were affected.%n", townsCountAffected);
             String queryForUpdateCities = "SELECT name FROM towns WHERE country = ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(queryForUpdateCities);
@@ -191,10 +185,52 @@ public class Homework {
         }
     }
 
+    // --------------------------- 6 ------------------------------
+
+    public void removeVillainEx6() throws SQLException {
+        System.out.println("Enter villain id:");
+        int villainId = Integer.parseInt(scanner.nextLine());
+
+        String villainName = getVillainNameById(villainId, "villains");
+        if (villainName == null) {
+            System.out.println("No such villain was found");
+            return;
+        }
+
+        String query = "DELETE FROM minions_villains WHERE villain_id = ?";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1 , villainId);
+        int count = preparedStatement.executeUpdate();
+        System.out.printf("%s was deleted%n", villainName);
+        System.out.printf("%d minions released%n", count);
+        System.out.println("If result is incorrect use fresh database!");
+    }
+
+    // --------------------------- 7 ------------------------------
+
+    public void printAllMinionsNameEx7() throws SQLException {
+        String query = "SELECT name FROM minions";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        List<String> minions = new ArrayList<>();
+        while (resultSet.next()){
+            minions.add(resultSet.getString("name"));
+        }
+
+        int lastIndex = minions.size() - 1;
+        for (int i = 0; i < minions.size() / 2; i++) {
+            System.out.println(minions.get(i));
+            System.out.println(minions.get(lastIndex - i));
+        }
+        System.out.println("If result is incorrect use fresh database!");
+    }
+
     // --------------------------- 8 ------------------------------
 
     public void increaseMinionsAgeEx8() throws SQLException {
-        scanner = new Scanner(System.in);
         System.out.println("Enter minions id with single space separator");
         List<Integer> minionsId = Arrays.stream(scanner.nextLine().split("\\s+"))
                 .map(Integer::parseInt).collect(Collectors.toList());
@@ -220,7 +256,6 @@ public class Homework {
 
     public void increaseMinionsAgeWithStoreProcedureEx9() throws SQLException {
         System.out.println("Enter minion id:");
-        scanner = new Scanner(System.in);
         int minionId = Integer.parseInt(scanner.nextLine());
 
         String query = "CALL usp_get_older(?)";
@@ -237,8 +272,4 @@ public class Homework {
             System.out.printf("%s %d%n", resultSet.getString("name"), resultSet.getInt("age"));
         }
     }
-
-
-
-
 }

@@ -5,7 +5,12 @@ public class Main {
     public static void main(String[] args) throws SQLException {
         Scanner scanner = new Scanner(System.in);
         Homework homework = new Homework();
-        homework.setConnection("root" , "12345");
+        System.out.println("Hello colleague!Now we need to connect the database.");
+        System.out.println("Enter your username:");
+        String username = scanner.nextLine();
+        System.out.println("Enter your password:");
+        String password = scanner.nextLine();
+        homework.setConnection(username , password);
 
 
         System.out.println("Enter number of task you want to test:");
@@ -26,8 +31,10 @@ public class Main {
                     homework.changeTownNameCasingEx5();
                     break;
                 case 6:
+                    homework.removeVillainEx6();
                     break;
                 case 7:
+                    homework.printAllMinionsNameEx7();
                     break;
                 case 8:
                     homework.increaseMinionsAgeEx8();
