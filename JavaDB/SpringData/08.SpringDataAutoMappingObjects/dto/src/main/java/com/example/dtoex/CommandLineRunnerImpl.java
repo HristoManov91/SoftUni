@@ -1,6 +1,7 @@
 package com.example.dtoex;
 
 import com.example.dtoex.model.dto.GameAddDto;
+import com.example.dtoex.model.dto.GamePrintDto;
 import com.example.dtoex.model.dto.UserLoginDto;
 import com.example.dtoex.model.dto.UserRegisterDto;
 import com.example.dtoex.service.GameService;
@@ -44,6 +45,10 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
                         LocalDate.parse(commands[7] , DateTimeFormatter.ofPattern("dd-MM-yyyy"))));
                 case "EditGame" -> gameService.editGame(Long.parseLong(commands[1]) , new BigDecimal(commands[2]) ,
                         Double.parseDouble(commands[3]));
+                case "DeleteGame" -> gameService.deleteGameById(Long.parseLong(commands[1]));
+                case "AllGames" -> gameService.printAllGameTitleAndPrice();
+                case "DetailGame" -> gameService.printDetailsForGame(commands[1]);
+                case "OwnedGames" -> userService.printAllGamesOnLoggedUser();
             }
         }
     }
