@@ -1,6 +1,7 @@
 package com.example.jsonex.service.impl;
 
 import com.example.jsonex.model.dto.UserSeedDto;
+import com.example.jsonex.model.dto.UserSoldDto;
 import com.example.jsonex.model.entity.User;
 import com.example.jsonex.repository.UserRepository;
 import com.example.jsonex.service.UserService;
@@ -13,7 +14,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -49,5 +52,13 @@ public class UserServiceImpl implements UserService {
         long randomId = ThreadLocalRandom.current().nextLong(1 , userRepository.count() + 1);
 
         return userRepository.findById(randomId).orElse(null);
+    }
+
+    @Override
+    public List<UserSoldDto> findAllUsersWithMoreThanOneSoldProducts() {
+        return userRepository.findAllUsersWithMoreThanOneSoldProductsOrderByLastNameThanFirstName()
+                .stream()
+                .map(user -> modelMapper.map(user , UserSoldDto.class))
+                .collect(Collectors.toList());
     }
 }

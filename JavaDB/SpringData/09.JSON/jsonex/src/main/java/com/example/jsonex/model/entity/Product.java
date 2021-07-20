@@ -26,7 +26,7 @@ public class Product extends BaseEntity{
         this.name = name;
     }
 
-    @Column (nullable = false)
+    @Column
     public BigDecimal getPrice() {
         return price;
     }
