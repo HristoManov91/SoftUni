@@ -1,9 +1,8 @@
 package com.example.jsonex.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 
 @Entity
@@ -11,6 +10,8 @@ import java.util.Objects;
 public class Category extends BaseEntity {
 
     private String name;
+
+    private Set<Product> products;
 
     public Category() {
     }
@@ -22,6 +23,15 @@ public class Category extends BaseEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @ManyToMany (mappedBy = "categories" , fetch = FetchType.EAGER)
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
     }
 
     @Override

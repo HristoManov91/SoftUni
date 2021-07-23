@@ -1,7 +1,6 @@
 package com.example.jsonex;
 
-import com.example.jsonex.model.dto.ProductNameAndPriceDto;
-import com.example.jsonex.model.dto.UserSoldDto;
+import com.example.jsonex.model.dto.*;
 import com.example.jsonex.service.CategoryService;
 import com.example.jsonex.service.ProductService;
 import com.example.jsonex.service.UserService;
@@ -23,7 +22,9 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 
     private static final String OUTPUT_FILE_PATH = "src/main/resources/files/out/";
     private static final String PRODUCT_IN_RANGE_FILE_NAME = "products-in-range.json";
-    private static final String USERS_AND_SOLD_PRODUCTS = "users-and-sold-products.json";
+    private static final String SOLD_PRODUCTS_INFO = "users-and-sold-products.json";
+    private static final String USERS_AND_SOLD_PRODUCTS_INFO = "users-and-sold-products-info.json";
+    private static final String CATEGORIES_BY_PRODUCTS_COUNT = "categories-by-products-count.json";
 
     private final CategoryService categoryService;
     private final UserService userService;
@@ -41,15 +42,33 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        seedData();
+//        seedData();
 
-        System.out.println("Enter exercise num:");
+        System.out.println("Enter query num from exercise 3:");
         int exNum = Integer.parseInt(bufferedReader.readLine());
 
         switch (exNum){
             case 1 -> productsInRange();
             case 2 -> soldProducts();
+            case 3 -> categoriesByProductsCount();
+            case 4 -> usersAndProducts();
         }
+    }
+
+    private void usersAndProducts() throws IOException {
+        UserCountAndProductsDto usersInfo = userService.usersAndSoldProductsInfo();
+
+        String content = gson.toJson(usersInfo);
+
+        writeToFile(OUTPUT_FILE_PATH + USERS_AND_SOLD_PRODUCTS_INFO, content);
+    }
+
+    private void categoriesByProductsCount() throws IOException {
+        List<CategoriesByProductCountDto> allOrderByProductsCount = categoryService.findAllOrderByProductsCount();
+
+        String content = gson.toJson(allOrderByProductsCount);
+
+        writeToFile(OUTPUT_FILE_PATH + CATEGORIES_BY_PRODUCTS_COUNT , content);
     }
 
     private void soldProducts() throws IOException {
@@ -57,7 +76,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 
         String content = gson.toJson(userSoldDtos);
 
-        writeToFile(OUTPUT_FILE_PATH + USERS_AND_SOLD_PRODUCTS , content);
+        writeToFile(OUTPUT_FILE_PATH + SOLD_PRODUCTS_INFO, content);
     }
 
     private void productsInRange() throws IOException {

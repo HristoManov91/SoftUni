@@ -1,7 +1,9 @@
 package com.example.jsonex.service.impl;
 
+import com.example.jsonex.model.dto.CategoriesByProductCountDto;
 import com.example.jsonex.model.dto.CategorySeedDto;
 import com.example.jsonex.model.entity.Category;
+import com.example.jsonex.model.entity.Product;
 import com.example.jsonex.repository.CategoryRepository;
 import com.example.jsonex.service.CategoryService;
 import com.example.jsonex.util.ValidationUtil;
@@ -10,12 +12,16 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -60,5 +66,41 @@ public class CategoryServiceImpl implements CategoryService {
         }
 
         return categories;
+    }
+
+    @Override
+    public List<CategoriesByProductCountDto> findAllOrderByProductsCount() {
+        return categoryRepository.findAllOrderByProductsCount()
+                .stream()
+                .map(category -> {
+                    CategoriesByProductCountDto map = modelMapper.map(category, CategoriesByProductCountDto.class);
+                    map.setProductsCount(category.getProducts().size());
+                    map.setTotalRevenue(totalRevenueOfCategory(category));
+                    map.setAveragePrice(averagePriceProductsInCategory(category));
+                    return map;
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public BigDecimal totalRevenueOfCategory(Category category) {
+        BigDecimal bigDecimal = category.getProducts()
+                .stream()
+                .map(Product::getPrice)
+                .reduce(BigDecimal::add)
+                .get();
+
+        return bigDecimal;
+    }
+
+    @Override
+    public BigDecimal averagePriceProductsInCategory(Category category) {
+        BigDecimal averagePrice = category.getProducts()
+                .stream()
+                .map(Product::getPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                .divide(new BigDecimal(category.getProducts().size()) , 6 , RoundingMode.HALF_UP);
+
+        return averagePrice;
     }
 }

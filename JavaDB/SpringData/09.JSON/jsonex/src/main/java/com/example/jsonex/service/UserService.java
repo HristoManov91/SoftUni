@@ -1,6 +1,8 @@
 package com.example.jsonex.service;
 
+import com.example.jsonex.model.dto.UserCountAndProductsDto;
 import com.example.jsonex.model.dto.UserSoldDto;
+import com.example.jsonex.model.dto.UserWithProductsSoldDto;
 import com.example.jsonex.model.entity.User;
 
 import java.io.IOException;
@@ -12,5 +14,7 @@ public interface UserService {
     User findRandomUser();
 
     List<UserSoldDto> findAllUsersWithMoreThanOneSoldProducts();
+
+    UserCountAndProductsDto usersAndSoldProductsInfo();
 }
 
