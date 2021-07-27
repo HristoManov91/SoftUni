@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 
 public interface XmlParser {
 
-    <T> T fromFile(String filePath , Class<T> clazz) throws JAXBException, FileNotFoundException;
+    <T> T writeToFile (String filePath , Class<T> clazz);
 
-    <T> void writeToFile (String filePath , T entity) throws JAXBException;
+    <T> T fromFile(String filePath , T entity);
 }
