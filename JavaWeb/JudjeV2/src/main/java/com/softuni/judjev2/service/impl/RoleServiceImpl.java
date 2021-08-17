@@ -24,4 +24,9 @@ public class RoleServiceImpl implements RoleService {
             roleRepository.save(user);
         }
     }
+
+    @Override
+    public Role findRole(RoleNameEnum roleNameEnum) {
+        return roleRepository.findByName(roleNameEnum).orElse(null);
+    }
 }
