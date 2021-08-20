@@ -20,4 +20,11 @@ public class Brand extends BaseEntity{
         this.name = name;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "Brand{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

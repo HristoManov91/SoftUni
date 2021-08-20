@@ -9,6 +9,8 @@ public class User extends BaseEntity{
     @Column
     private String username;
     @Column
+    private String password;
+    @Column
     private String firstName;
     @Column
     private String lastName;
@@ -74,5 +76,27 @@ public class User extends BaseEntity{
     public User setRole(UserRole role) {
         this.role = role;
         return this;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public User setPassword(String password) {
+        this.password = password;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", password=N/A'"  + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", isActive=" + isActive +
+                ", role=" + role +
+                ", imageUrl='" + imageUrl + '\'' +
+                '}';
     }
 }
