@@ -61,7 +61,8 @@ public class UserController {
             return "redirect:login";
         }
 
-        httpSession.setAttribute("user" , userServiceModel);
+//        httpSession.setAttribute("user" , userServiceModel);
+        userService.login(userServiceModel);
 
         return "redirect:/";
     }
@@ -93,5 +94,12 @@ public class UserController {
         userService.registerUser(userServiceModel);
 
         return "redirect:login";
+    }
+
+    @GetMapping("/logout")
+    public String logout(){
+        userService.logout();
+
+        return "redirect:/";
     }
 }
