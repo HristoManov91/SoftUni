@@ -1,6 +1,7 @@
 package com.softuni.judjev2.service;
 
 import com.softuni.judjev2.model.entity.RoleNameEnum;
+import com.softuni.judjev2.model.entity.User;
 import com.softuni.judjev2.model.service.UserServiceModel;
 
 import java.util.List;
@@ -17,5 +18,7 @@ public interface UserService {
     List<String> findAllUsernames();
 
     void changeRole(String username, RoleNameEnum role);
+
+    User findByName(String username);
 }
 

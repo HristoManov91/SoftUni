@@ -12,4 +12,6 @@ public interface ExerciseRepository extends JpaRepository<Exercise , Long> {
 
     @Query("SELECT e.name FROM Exercise e ORDER BY e.name")
     List<String> findAllNames();
+
+    Exercise findByName(String name);
 }
