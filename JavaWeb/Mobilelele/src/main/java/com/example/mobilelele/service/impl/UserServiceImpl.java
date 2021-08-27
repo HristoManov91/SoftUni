@@ -47,4 +47,9 @@ public class UserServiceImpl implements UserService {
             return passwordEncoder.matches(password , user.getPassword());
         }
     }
+
+    @Override
+    public User findByUsername(String name) {
+        return userRepository.findByUsername(name);
+    }
 }

@@ -27,10 +27,9 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public void addBrand(String name, Instant createDate) {
+    public void addBrand(String name) {
         Brand brand = new Brand();
         brand.setName(name);
-        brand.setCreated(createDate);
         brandRepository.save(brand);
     }
 
@@ -44,6 +43,8 @@ public class BrandServiceImpl implements BrandService {
         List<BrandViewModel> brandViewModels = new ArrayList<>();
 
         List<Model> models = modelRepository.findAll();
+
+        models.stream().map(model -> modelMapper.map(model , BrandViewModel.class)).forEach(brandViewModels::add);
 
         return brandViewModels;
     }

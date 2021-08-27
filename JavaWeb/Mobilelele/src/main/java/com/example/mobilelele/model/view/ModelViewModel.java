@@ -4,6 +4,7 @@ import com.example.mobilelele.model.entity.Category;
 
 public class ModelViewModel {
 
+    private Long id;
     private String name;
     private Category category;
     private Integer startYear;
@@ -53,5 +54,26 @@ public class ModelViewModel {
     public ModelViewModel setPicture(String picture) {
         this.picture = picture;
         return this;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public ModelViewModel setId(Long id) {
+        this.id = id;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "ModelViewModel{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", category=" + category +
+                ", startYear=" + startYear +
+                ", endYear=" + endYear +
+                ", picture='" + picture + '\'' +
+                '}';
     }
 }

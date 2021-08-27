@@ -11,5 +11,7 @@ public interface UserService {
     void logoutCurrentUser();
 
     boolean authenticate(String username , String password);
+
+    User findByUsername(String name);
 }
 

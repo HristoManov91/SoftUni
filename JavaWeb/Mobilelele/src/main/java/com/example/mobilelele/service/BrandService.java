@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface BrandService {
 
-    void addBrand(String name , Instant createDate );
+    void addBrand(String name);
 
     Brand findById(Long id);
 

@@ -22,15 +22,19 @@ public class ModelServiceImpl implements ModelService {
     }
 
     @Override
-    public void addModel(String name, Instant created, String category, String imageUrl, Integer startYear, Long brandId) {
+    public void addModel(String name, String category, String imageUrl, Integer startYear, Long brandId) {
         Model model = new Model();
         model.setName(name);
-        model.setCreated(created);
         model.setImageUrl(imageUrl);
         model.setStartYear(startYear);
         model.setBrand(brandService.findById(brandId));
         model.setCategory(Category.valueOf(category.toUpperCase(Locale.ROOT)));
 
         modelRepository.save(model);
+    }
+
+    @Override
+    public Model findById(Long id) {
+        return modelRepository.findById(id).orElseThrow();
     }
 }

@@ -4,6 +4,8 @@ import java.util.List;
 
 public class BrandViewModel {
 
+    private Long id;
+
     private String name;
 
     private List<ModelViewModel> models;
@@ -23,6 +25,15 @@ public class BrandViewModel {
 
     public BrandViewModel setName(String name) {
         this.name = name;
+        return this;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public BrandViewModel setId(Long id) {
+        this.id = id;
         return this;
     }
 }
