@@ -20,9 +20,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void register(UserServiceModel userServiceModel) {
-        User user = modelMapper.map(userServiceModel, User.class);
-        userRepository.save(user);
+    public Boolean register(UserServiceModel userServiceModel) {
+        try {
+            User user = modelMapper.map(userServiceModel, User.class);
+            userRepository.save(user);
+        } catch (Exception e){
+            return false;
+        }
+        return true;
     }
 
     @Override

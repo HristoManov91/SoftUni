@@ -4,7 +4,7 @@ import com.ex.shopinglistapplication.model.binding.UserRegisterBindingModel;
 import com.ex.shopinglistapplication.model.service.UserServiceModel;
 
 public interface UserService {
-    void register(UserServiceModel userServiceModel);
+    Boolean register(UserServiceModel userServiceModel);
 
     UserServiceModel findByUsernameAndPassword(String username, String password);
 }
