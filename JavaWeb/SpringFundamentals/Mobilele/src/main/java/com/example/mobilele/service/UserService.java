@@ -7,4 +7,6 @@ public interface UserService {
     void saveUser(UserEntity userEntity);
 
     UserEntity findUserById(Long id);
+
+    boolean login(String username , String password);
 }

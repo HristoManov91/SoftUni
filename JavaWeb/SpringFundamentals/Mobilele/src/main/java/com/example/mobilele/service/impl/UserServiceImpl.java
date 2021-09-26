@@ -23,4 +23,9 @@ public class UserServiceImpl implements UserService {
     public UserEntity findUserById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public boolean login(String username, String password) {
+        return false;
+    }
 }

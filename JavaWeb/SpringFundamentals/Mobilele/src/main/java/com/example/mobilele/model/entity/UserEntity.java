@@ -7,8 +7,10 @@ import java.time.Instant;
 @Table(name = "users")
 public class UserEntity extends BaseEntity{
 
-    @Column(nullable = false)
+    @Column(nullable = false , unique = true)
     private String username;
+    @Column(nullable = false)
+    private String password;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
@@ -96,6 +98,15 @@ public class UserEntity extends BaseEntity{
 
     public UserEntity setModified(Instant modified) {
         this.modified = modified;
+        return this;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public UserEntity setPassword(String password) {
+        this.password = password;
         return this;
     }
 }
