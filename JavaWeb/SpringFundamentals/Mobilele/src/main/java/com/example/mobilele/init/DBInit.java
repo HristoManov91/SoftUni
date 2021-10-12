@@ -24,7 +24,6 @@ public class DBInit implements CommandLineRunner {
     private final BrandService brandService;
     private final ModelService modelService;
     private final OfferService offerService;
-    private final PasswordEncoder passwordEncoder;
 
     public DBInit(UserRoleService userRoleService, UserService userService, BrandService brandService, ModelService modelService, OfferService offerService, PasswordEncoder passwordEncoder) {
         this.userRoleService = userRoleService;
@@ -32,7 +31,6 @@ public class DBInit implements CommandLineRunner {
         this.brandService = brandService;
         this.modelService = modelService;
         this.offerService = offerService;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -51,7 +49,7 @@ public class DBInit implements CommandLineRunner {
                 .setMileage(50000)
                 .setTransmission(TransmissionEnum.AUTOMATIC)
                 .setModel(modelService.findByName("Avensis"))
-                .setPrice(BigDecimal.valueOf(20500))
+                .setPrice(20500)
                 .setSeller(userService.findUserById(1L))
                 .setYear(2021)
                 .setDescription("Много добра карана от баба в германия до магазина")
@@ -65,7 +63,7 @@ public class DBInit implements CommandLineRunner {
                 .setMileage(40000)
                 .setTransmission(TransmissionEnum.AUTOMATIC)
                 .setModel(modelService.findByName("E class"))
-                .setPrice(BigDecimal.valueOf(50500))
+                .setPrice(50500)
                 .setSeller(userService.findUserById(2L))
                 .setYear(2019)
                 .setDescription("Много добра карана от баба в германия до магазина")
@@ -79,7 +77,7 @@ public class DBInit implements CommandLineRunner {
                 .setMileage(15000)
                 .setTransmission(TransmissionEnum.MANUAL)
                 .setModel(modelService.findByName("Xblade"))
-                .setPrice(BigDecimal.valueOf(25500))
+                .setPrice(25500)
                 .setSeller(userService.findUserById(1L))
                 .setYear(2021)
                 .setDescription("Много добра,бърз и надежден")
@@ -93,7 +91,7 @@ public class DBInit implements CommandLineRunner {
                 .setMileage(555000)
                 .setTransmission(TransmissionEnum.AUTOMATIC)
                 .setModel(modelService.findByName("170"))
-                .setPrice(BigDecimal.valueOf(115500))
+                .setPrice(115500)
                 .setSeller(userService.findUserById(2L))
                 .setYear(2021)
                 .setDescription("Много добър,обслужен и икономичен")
@@ -107,7 +105,7 @@ public class DBInit implements CommandLineRunner {
                 .setMileage(255000)
                 .setTransmission(TransmissionEnum.AUTOMATIC)
                 .setModel(modelService.findByName("Tourismo"))
-                .setPrice(BigDecimal.valueOf(135500))
+                .setPrice(135500)
                 .setSeller(userService.findUserById(1L))
                 .setYear(2021)
                 .setDescription("Много добър,обслужен и икономичен")

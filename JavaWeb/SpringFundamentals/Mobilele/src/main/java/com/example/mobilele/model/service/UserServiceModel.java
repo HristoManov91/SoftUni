@@ -1,15 +1,22 @@
 package com.example.mobilele.model.service;
 
 import com.example.mobilele.model.entity.UserRoleEntity;
+import com.example.mobilele.model.entity.enums.UserRoleEnum;
+
+import java.time.Instant;
 
 public class UserServiceModel {
 
     private Long id;
     private String username;
+    private String password;
     private String firstName;
     private String lastName;
     private Boolean isActive;
-    private UserRoleEntity role;
+    private UserRoleEnum role;
+    private String imageUrl;
+    private Instant created;
+    private Instant modified;
 
     public UserServiceModel() {
     }
@@ -29,6 +36,15 @@ public class UserServiceModel {
 
     public UserServiceModel setUsername(String username) {
         this.username = username;
+        return this;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public UserServiceModel setPassword(String password) {
+        this.password = password;
         return this;
     }
 
@@ -59,12 +75,39 @@ public class UserServiceModel {
         return this;
     }
 
-    public UserRoleEntity getRole() {
+    public UserRoleEnum getRole() {
         return role;
     }
 
-    public UserServiceModel setRole(UserRoleEntity role) {
+    public UserServiceModel setRole(UserRoleEnum role) {
         this.role = role;
+        return this;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public UserServiceModel setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+        return this;
+    }
+
+    public Instant getCreated() {
+        return created;
+    }
+
+    public UserServiceModel setCreated(Instant created) {
+        this.created = created;
+        return this;
+    }
+
+    public Instant getModified() {
+        return modified;
+    }
+
+    public UserServiceModel setModified(Instant modified) {
+        this.modified = modified;
         return this;
     }
 }

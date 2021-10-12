@@ -18,4 +18,9 @@ public class OfferServiceImpl implements OfferService {
     public void saveOffer(OfferEntity offer) {
         offerRepository.save(offer);
     }
+
+    @Override
+    public void deleteOffer(Long id) {
+        offerRepository.deleteById(id);
+    }
 }

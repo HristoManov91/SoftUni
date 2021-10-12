@@ -2,9 +2,12 @@ package com.example.mobilele.web;
 
 import com.example.mobilele.model.binding.UserLoginBindingModel;
 import com.example.mobilele.model.binding.UserRegisterBindingModel;
+import com.example.mobilele.model.service.UserLoginServiceModel;
 import com.example.mobilele.model.service.UserServiceModel;
 import com.example.mobilele.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +22,8 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/users")
 public class UserController {
+
+    private static Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     private final UserService userService;
     private final ModelMapper modelMapper;
@@ -38,17 +43,12 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String loginConfirm(@Valid @ModelAttribute UserLoginBindingModel userLoginBindingModel,
-                               BindingResult bindingResult , RedirectAttributes redirectAttributes){
+    public String loginConfirm(UserLoginBindingModel userLoginBindingModel){
+        UserLoginServiceModel user = new UserLoginServiceModel()
+                .setUsername(userLoginBindingModel.getUsername())
+                .setRawPassword(userLoginBindingModel.getPassword());
 
-        if (bindingResult.hasErrors()){
-            redirectAttributes.addFlashAttribute("userLoginBindingModel" , userLoginBindingModel);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userLoginBindingModel" , bindingResult);
-
-            return "redirect:/login";
-        }
-
-        return "redirect:/";
+        boolean loginSuccessful = userService.login(user);
     }
 
     @GetMapping("/register")
@@ -63,12 +63,18 @@ public class UserController {
     public String registerConfirm(@Valid @ModelAttribute UserRegisterBindingModel userRegisterBindingModel,
                                   BindingResult bindingResult, RedirectAttributes redirectAttributes){
 
-        if(bindingResult.hasErrors()){
+        boolean usernameExist = userService.usernameExist(userRegisterBindingModel.getUsername());
+
+        if(bindingResult.hasErrors() || usernameExist){
             redirectAttributes.addFlashAttribute("userRegisterBindingModel" , userRegisterBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userRegisterBindingModel" ,
+                    bindingResult);
             return "redirect:register";
         }
 
-        //ToDo да запазя юзер в базата
+        UserServiceModel userServiceModel = modelMapper.map(userRegisterBindingModel , UserServiceModel.class);
+
+        userService.saveUser(userServiceModel);
 
         return "redirect:login";
     }

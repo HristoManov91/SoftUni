@@ -20,8 +20,6 @@ public class UserRegisterBindingModel {
     @NotBlank
     @Length(min = 2 , max = 15 , message = "Password length must be between 2 and 15 characters!")
     private String password;
-    @NotNull
-    private UserRoleEntity role;
 
 
     public UserRegisterBindingModel() {
@@ -60,15 +58,6 @@ public class UserRegisterBindingModel {
 
     public UserRegisterBindingModel setPassword(String password) {
         this.password = password;
-        return this;
-    }
-
-    public UserRoleEntity getRole() {
-        return role;
-    }
-
-    public UserRegisterBindingModel setRole(UserRoleEntity role) {
-        this.role = role;
         return this;
     }
 }

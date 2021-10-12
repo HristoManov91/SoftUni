@@ -5,23 +5,28 @@ import com.example.mobilele.model.entity.enums.UserRoleEnum;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Component
 @SessionScope
 public class CurrentUser {
 
-    private Long id;
+    private boolean loggedIn;
     private String username;
-    private UserRoleEntity role;
+    private String firstName;
+    private String lastName;
+    private Set<UserRoleEnum> roles = new HashSet<>();
 
     public CurrentUser() {
     }
 
-    public Long getId() {
-        return id;
+    public boolean isLoggedIn() {
+        return loggedIn;
     }
 
-    public CurrentUser setId(Long id) {
-        this.id = id;
+    public CurrentUser setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
         return this;
     }
 
@@ -34,20 +39,42 @@ public class CurrentUser {
         return this;
     }
 
-    public UserRoleEntity getRole() {
-        return role;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public CurrentUser setRole(UserRoleEntity role) {
-        this.role = role;
+    public CurrentUser setFirstName(String firstName) {
+        this.firstName = firstName;
         return this;
     }
 
-    public boolean isAnonymous(){
-        return this.username == null;
+    public String getLastName() {
+        return lastName;
+    }
+
+    public CurrentUser setLastName(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
+    public Set<UserRoleEnum> getRoles() {
+        return roles;
+    }
+
+    public void addRole(UserRoleEnum role){
+        roles.add(role);
+    }
+
+    public CurrentUser clearRoles(){
+        roles.clear();
+        return this;
     }
 
     public boolean isAdmin(){
-        return this.role.getRole() == UserRoleEnum.ADMIN;
+        return roles.contains(UserRoleEnum.ADMIN);
+    }
+
+    public void clean(){
+        setLoggedIn(false).setFirstName(null).setLastName(null).clearRoles();
     }
 }

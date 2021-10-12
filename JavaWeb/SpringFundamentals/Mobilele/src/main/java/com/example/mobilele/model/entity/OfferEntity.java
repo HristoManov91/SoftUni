@@ -4,7 +4,6 @@ import com.example.mobilele.model.entity.enums.EngineEnum;
 import com.example.mobilele.model.entity.enums.TransmissionEnum;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
@@ -20,7 +19,7 @@ public class OfferEntity extends BaseEntity {
     @Column
     private Integer mileage;
     @Column
-    private BigDecimal price;
+    private Integer price;
     @Enumerated(EnumType.ORDINAL)
     private TransmissionEnum transmission;
     @Column
@@ -73,11 +72,11 @@ public class OfferEntity extends BaseEntity {
         return this;
     }
 
-    public BigDecimal getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public OfferEntity setPrice(BigDecimal price) {
+    public OfferEntity setPrice(Integer price) {
         this.price = price;
         return this;
     }

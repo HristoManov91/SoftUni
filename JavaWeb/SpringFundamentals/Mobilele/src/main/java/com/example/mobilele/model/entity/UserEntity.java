@@ -2,6 +2,7 @@ package com.example.mobilele.model.entity;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -17,8 +18,8 @@ public class UserEntity extends BaseEntity{
     private String lastName;
     @Column
     private Boolean isActive;
-    @ManyToOne
-    private UserRoleEntity role;
+    @ManyToMany
+    private Set<UserRoleEntity> roles;
     @Column
     private String imageUrl;
     @Column
@@ -65,12 +66,12 @@ public class UserEntity extends BaseEntity{
         return this;
     }
 
-    public UserRoleEntity getRole() {
-        return role;
+    public Set<UserRoleEntity> getRoles() {
+        return roles;
     }
 
-    public UserEntity setRole(UserRoleEntity role) {
-        this.role = role;
+    public UserEntity setRoles(Set<UserRoleEntity> roles) {
+        this.roles = roles;
         return this;
     }
 
