@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class UserRegisterBindingModel {
 
@@ -20,6 +21,9 @@ public class UserRegisterBindingModel {
     @NotBlank
     @Length(min = 2 , max = 15 , message = "Password length must be between 2 and 15 characters!")
     private String password;
+    @NotNull
+    @Size(min = 4 , max = 20 , message = "Password length must be between 2 and 15 characters!")
+    private String confirmPassword;
 
 
     public UserRegisterBindingModel() {
@@ -58,6 +62,15 @@ public class UserRegisterBindingModel {
 
     public UserRegisterBindingModel setPassword(String password) {
         this.password = password;
+        return this;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public UserRegisterBindingModel setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
         return this;
     }
 }

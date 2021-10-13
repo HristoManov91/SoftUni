@@ -3,7 +3,7 @@ package com.example.mobilele.web;
 import com.example.mobilele.model.binding.UserLoginBindingModel;
 import com.example.mobilele.model.binding.UserRegisterBindingModel;
 import com.example.mobilele.model.service.UserLoginServiceModel;
-import com.example.mobilele.model.service.UserServiceModel;
+import com.example.mobilele.model.service.UserRegisterServiceModel;
 import com.example.mobilele.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -33,49 +33,72 @@ public class UserController {
         this.modelMapper = modelMapper;
     }
 
+    @ModelAttribute("userModel")
+    public UserRegisterBindingModel userModel(){
+        return new UserRegisterBindingModel();
+    }
+
+    // ----- Login -----
     @GetMapping("/login")
-    public String login(Model model){
-        if(!model.containsAttribute("userLoginBindingModel")){
-            model.addAttribute("userLoginBindingModel" , new UserServiceModel());
-            model.addAttribute("notFound" , false);
+    public String login(Model model) {
+        if (!model.containsAttribute("userLoginBindingModel")) {
+            model.addAttribute("userLoginBindingModel", new UserRegisterServiceModel());
+            model.addAttribute("notFound", false);
         }
         return "auth-login";
     }
 
     @PostMapping("/login")
-    public String loginConfirm(UserLoginBindingModel userLoginBindingModel){
+    public String loginConfirm(UserLoginBindingModel userLoginBindingModel) {
         UserLoginServiceModel user = new UserLoginServiceModel()
                 .setUsername(userLoginBindingModel.getUsername())
                 .setRawPassword(userLoginBindingModel.getPassword());
 
         boolean loginSuccessful = userService.login(user);
+
+        LOGGER.info("User tried to login. User with name {} tried to login. Success = {}?",
+                userLoginBindingModel.getUsername(),
+                loginSuccessful);
+
+        if (loginSuccessful) {
+            return "redirect:/";
+        }
+
+        return "redirect:login";
     }
 
+    // ----- Register -----
     @GetMapping("/register")
-    public String register(Model model){
-        if(!model.containsAttribute("userRegisterBindingModel")){
-            model.addAttribute("userRegisterBindingModel" , new UserRegisterBindingModel());
-        }
+    public String register() {
         return "auth-register";
     }
 
     @PostMapping("/register")
-    public String registerConfirm(@Valid @ModelAttribute UserRegisterBindingModel userRegisterBindingModel,
-                                  BindingResult bindingResult, RedirectAttributes redirectAttributes){
+    public String registerConfirm(@Valid UserRegisterBindingModel userModel,
+                                  BindingResult bindingResult,
+                                  RedirectAttributes redirectAttributes) {
 
-        boolean usernameExist = userService.usernameExist(userRegisterBindingModel.getUsername());
+        boolean usernameExist = userService.usernameExist(userModel.getUsername());
+        boolean equalsPasswords = userModel.getPassword().equals(userModel.getConfirmPassword());
 
-        if(bindingResult.hasErrors() || usernameExist){
-            redirectAttributes.addFlashAttribute("userRegisterBindingModel" , userRegisterBindingModel);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userRegisterBindingModel" ,
+        if (bindingResult.hasErrors() || usernameExist || !equalsPasswords) {
+            redirectAttributes.addFlashAttribute("userModel", userModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userModel",
                     bindingResult);
             return "redirect:register";
         }
 
-        UserServiceModel userServiceModel = modelMapper.map(userRegisterBindingModel , UserServiceModel.class);
+        UserRegisterServiceModel serviceModel = modelMapper.map(userModel, UserRegisterServiceModel.class);
 
-        userService.saveUser(userServiceModel);
+        userService.registerAndLoginUser(serviceModel);
 
-        return "redirect:login";
+        return "redirect:/";
+    }
+
+    // ----- Logout -----
+    @GetMapping("logout")
+    public String logout(){
+        userService.logout();
+        return "redirect:/";
     }
 }

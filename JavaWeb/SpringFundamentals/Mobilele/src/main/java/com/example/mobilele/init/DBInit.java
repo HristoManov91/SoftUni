@@ -13,8 +13,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.Set;
 
 @Component
 public class DBInit implements CommandLineRunner {
@@ -24,19 +24,21 @@ public class DBInit implements CommandLineRunner {
     private final BrandService brandService;
     private final ModelService modelService;
     private final OfferService offerService;
+    private final PasswordEncoder passwordEncoder;
 
-    public DBInit(UserRoleService userRoleService, UserService userService, BrandService brandService, ModelService modelService, OfferService offerService, PasswordEncoder passwordEncoder) {
+    public DBInit(UserRoleService userRoleService, UserService userService, BrandService brandService, ModelService modelService, OfferService offerService, PasswordEncoder passwordEncoder, PasswordEncoder passwordEncoder1) {
         this.userRoleService = userRoleService;
         this.userService = userService;
         this.brandService = brandService;
         this.modelService = modelService;
         this.offerService = offerService;
+        this.passwordEncoder = passwordEncoder1;
     }
 
     @Override
     public void run(String... args) throws Exception {
         userRoleService.initRoles();
-//        initUsers();
+        initUsers();
         initBrands();
         initModels();
         initOffers();
@@ -180,25 +182,25 @@ public class DBInit implements CommandLineRunner {
         brandService.saveBrand(scania);
     }
 
-//    private void initUsers() {
-//        UserEntity admin = new UserEntity()
-//                .setUsername("admin")
-//                .setPassword(passwordEncoder.encode("topsecret"))
-//                .setFirstName("Hristo")
-//                .setLastName("Manov")
-//                .setCreated(Instant.now())
-//                .setRole(userRoleService.findRoleByName(UserRoleEnum.ADMIN));
-//
-//        userService.saveUser(admin);
-//
-//
-//        UserEntity user = new UserEntity()
-//                .setUsername("user")
-//                .setPassword(passwordEncoder.encode("topsecret"))
-//                .setFirstName("Ivan")
-//                .setLastName("Ivanov")
-//                .setCreated(Instant.now())
-//                .setRole(userRoleService.findRoleByName(UserRoleEnum.USER));
-//        userService.saveUser(user);
-//    }
+    private void initUsers() {
+        UserEntity admin = new UserEntity()
+                .setUsername("admin")
+                .setPassword(passwordEncoder.encode("topsecret"))
+                .setFirstName("Hristo")
+                .setLastName("Manov")
+                .setCreated(Instant.now())
+                .setRoles(Set.of(userRoleService.findRoleByName(UserRoleEnum.ADMIN)));
+
+        userService.saveUser(admin);
+
+
+        UserEntity user = new UserEntity()
+                .setUsername("user")
+                .setPassword(passwordEncoder.encode("topsecret"))
+                .setFirstName("Ivan")
+                .setLastName("Ivanov")
+                .setCreated(Instant.now())
+                .setRoles(Set.of(userRoleService.findRoleByName(UserRoleEnum.USER)));
+        userService.saveUser(user);
+    }
 }
