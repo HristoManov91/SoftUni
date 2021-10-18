@@ -56,7 +56,7 @@ public class OffersController {
         return "update";
     }
 
-    @GetMapping("/{id}/edit/erros")
+    @GetMapping("/{id}/edit/errors")
     public String editOfferErrors(@PathVariable Long id , Model model){
 
         model.addAttribute("engines" , EngineEnum.values());
@@ -77,7 +77,7 @@ public class OffersController {
                     .addFlashAttribute("org.springframework.validation.BindingResult.offerModel",
                             bindingResult);
 
-            return "redirect:/offers/" + id + "/edit/errors";
+            return "redirect:/" + id + "/edit/errors";
         }
 
         OfferUpdateServiceModel serviceModel = modelMapper.map(offerModel , OfferUpdateServiceModel.class);
