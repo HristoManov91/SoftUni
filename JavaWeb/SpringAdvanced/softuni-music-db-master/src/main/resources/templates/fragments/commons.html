@@ -60,6 +60,7 @@
         </li>
         <li sec:authorize="isAuthenticated()" class="nav-item">
           <form th:action="@{/logout}" method="POST">
+            <!-- ToDo да обравя бутона да изгледа добре -->
             <button type="submit" class="nav-link">
               Logout
             </button>
