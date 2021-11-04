@@ -14,5 +14,5 @@ public interface ShipService {
 
     List<ShipBattleServiceModel> findAllShipsOrderByIdAndStatus();
 
-    void attack(String attacker , String defender);
+    void attack(Long attackerId , Long defenderId);
 }

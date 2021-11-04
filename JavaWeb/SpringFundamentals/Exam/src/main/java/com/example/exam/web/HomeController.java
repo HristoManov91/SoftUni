@@ -5,11 +5,15 @@ import com.example.exam.model.service.ShipBattleServiceModel;
 import com.example.exam.service.ShipService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 @Controller
 public class HomeController {
@@ -27,21 +31,32 @@ public class HomeController {
 
     @GetMapping("/home")
     public String home(Model model){
-        if (model.containsAttribute("shipBattleBindingModel")){
-            model.addAttribute("shipBattleBindingModel" , new ShipBattleBindingModel());
-        }
+
         model.addAttribute("attackerShips" , shipService.findAllShipFromLoggetUser());
         model.addAttribute("defenderShips" , shipService.findAllShipWithoutLoginUser());
         model.addAttribute("allShips" , shipService.findAllShipsOrderByIdAndStatus());
 
-//        shipService.attack(shipBattleBindingModel.getAttackerName() , shipBattleBindingModel.getDefenderName());
         return "home";
     }
 
-    @PostMapping("/home/fire")
-    public String fire(ShipBattleBindingModel shipBattleBindingModel){
+    @PostMapping("/home")
+    public String fire(@Valid ShipBattleBindingModel shipBattleBindingModel,
+                       BindingResult bindingResult , RedirectAttributes redirectAttributes){
 
-//        shipService.attack(ShipBattleServiceModel attacker , ShipBattleServiceModel defender);
-        return "redirect:home";
+        if (bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("shipBattleBindingModel" , shipBattleBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.shipBattleBindingModel",
+                    bindingResult);
+
+            return "redirect:/home";
+        }
+
+        shipService.attack(shipBattleBindingModel.getAttackerShipId(), shipBattleBindingModel.getDefenderShipId());
+        return "redirect:/home";
+    }
+
+    @ModelAttribute
+    public ShipBattleBindingModel shipBattleBindingModel() {
+        return new ShipBattleBindingModel();
     }
 }

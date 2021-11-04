@@ -1,28 +1,32 @@
 package com.example.exam.model.binding;
 
+import javax.validation.constraints.NotNull;
+
 public class ShipBattleBindingModel {
 
-    private String attackerName;
-    private String defenderName;
+    @NotNull(message = "You must select the ship.")
+    private Long attackerShipId;
+    @NotNull(message = "You must select the ship.")
+    private Long defenderShipId;
 
     public ShipBattleBindingModel() {
     }
 
-    public String getAttackerName() {
-        return attackerName;
+    public Long getAttackerShipId() {
+        return attackerShipId;
     }
 
-    public ShipBattleBindingModel setAttackerName(String attackerName) {
-        this.attackerName = attackerName;
+    public ShipBattleBindingModel setAttackerShipId(Long attackerShipId) {
+        this.attackerShipId = attackerShipId;
         return this;
     }
 
-    public String getDefenderName() {
-        return defenderName;
+    public Long getDefenderShipId() {
+        return defenderShipId;
     }
 
-    public ShipBattleBindingModel setDefenderName(String defenderName) {
-        this.defenderName = defenderName;
+    public ShipBattleBindingModel setDefenderShipId(Long defenderShipId) {
+        this.defenderShipId = defenderShipId;
         return this;
     }
 }

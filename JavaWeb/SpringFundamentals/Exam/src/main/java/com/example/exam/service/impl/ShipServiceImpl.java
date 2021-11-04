@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -80,16 +81,21 @@ public class ShipServiceImpl implements ShipService {
     }
 
     @Override
-    public void attack(String attacker, String defender) {
-        ShipEntity attackerEntity = shipRepository.findByName(attacker);
-        ShipEntity defenderEntity = shipRepository.findByName(defender);
+    public void attack(Long attackerId, Long defenderId) {
+        Optional<ShipEntity> attackerEntity = shipRepository.findById(attackerId);
+        Optional<ShipEntity> defenderEntity = shipRepository.findById(defenderId);
 
-        System.out.println();
-//        if (defender.getHealth() > attacker.getPower()){
-//            ShipEntity shipEntity = shipRepository.findByName(defender.getName());
-//            shipEntity.setHealth(defender.getHealth() - (attacker.getPower().floatValue()));
-//        } else {
-//            shipRepository.delete(shipRepository.findByName(defender.getName()));
-//        }
+        if (attackerEntity.isEmpty() || defenderEntity.isEmpty()){
+            return;
+        }
+
+        ShipEntity defender = defenderEntity.get();
+        ShipEntity attacker = attackerEntity.get();
+        if (defender.getHealth() > attacker.getPower()){
+            defender.setHealth(defender.getHealth() - (attacker.getPower().floatValue()));
+            shipRepository.save(defender);
+        } else {
+            shipRepository.delete(defender);
+        }
     }
 }
