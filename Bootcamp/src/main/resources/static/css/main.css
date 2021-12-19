@@ -1,0 +1,13 @@
+#error-page {
+    background-image: url("/img/error.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 700px 300px;
+}
+
+#error-page-404 {
+    background-image: url("/img/error-404.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 700px 500px;
+}
