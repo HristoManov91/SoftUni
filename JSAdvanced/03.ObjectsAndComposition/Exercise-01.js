@@ -1,12 +1,8 @@
 function solve(array){
     let output = {};
 
-    for (let i = 0; i < array.length; i++) {
-        if ( i % 2 == 0){
-            output = array[i]
-        } else {
-            
-        }
+    for (let i = 0; i < array.length; i+=2) {
+        output[array[i]] = Number(array[i + 1]);
     }
 
     console.log(output)
