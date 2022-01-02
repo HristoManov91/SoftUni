@@ -1,20 +1,22 @@
-function solve (array){
-    let tempArray = [];
+function solve(array) {
+    let products = new Map();
 
-    for (const arrayElement of array) {
-        let tokens = arrayElement.split(' | ');
-        let town = tokens[0];
-        let product = tokens[1];
-        let price = tokens[2];
-
-        let object = {town: town, product: product, price: price};
-
-        //ToDo fix same object
-        tempArray.push(object);
+    for (let tokens of array) {
+        let [town, product, price] = tokens.split(" | ");
+        if (!products.has(product)) {
+            products.set(product, new Map());
+        }
+        products.get(product).set(town, Number(price));
     }
 
-    for (const object of tempArray) {
-        console.log(`${object.product} -> ${object.price} (${object.town})`);
+    for (let [key, value] of products) {
+        let lowest = ([...value].reduce(function (a, b) {
+            if (a[1] <= b[1]) {
+                return a;
+            }
+            return b;
+        }));
+        console.log(`${key} -> ${lowest[1]} (${lowest[0]})`);
     }
 }
 

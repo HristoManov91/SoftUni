@@ -4,8 +4,8 @@ function solve(carParams) {
     car.engine = engine(carParams.power);
     car.carriage = {type: carParams.carriage, color: carParams.color};
     car.wheels = carParams.wheelsize % 2 == 0
-        ? [carParams.wheelsize - 1, carParams.wheelsize - 1, carParams.wheelsize - 1, carParams.wheelsize - 1]
-        : [carParams.wheelsize, carParams.wheelsize, carParams.wheelsize, carParams.wheelsize];
+        ? new Array(4).fill(carParams.wheelsize - 1 , 0 , 4)
+        : new Array(4).fill(carParams.wheelsize , 0 , 4)
 
     function engine(power) {
         let engine = {};
@@ -14,8 +14,7 @@ function solve(carParams) {
             engine.power = 90;
             engine.volume = 1800;
         } else if (power <= 120) {
-            engine.power = 120;
-            engine.volume = 2400;
+            return {power: 120 , volume: 2400}
         } else if (power <= 200) {
             engine.power = 200;
             engine.volume = 3500;
@@ -27,14 +26,14 @@ function solve(carParams) {
     return car;
 }
 
-solve({
+console.log(solve({
         model: 'VW Golf II',
         power: 90,
         color: 'blue',
         carriage: 'hatchback',
         wheelsize: 14
     }
-);
+));
 
 solve({
         model: 'Opel Vectra',
