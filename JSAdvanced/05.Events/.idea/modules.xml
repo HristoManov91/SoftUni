@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../05.DOMEvents/.idea/05.DOMEvents.iml" filepath="$PROJECT_DIR$/../05.DOMEvents/.idea/05.DOMEvents.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/05.Events.iml" filepath="$PROJECT_DIR$/.idea/05.Events.iml" />
     </modules>
   </component>
 </project>
