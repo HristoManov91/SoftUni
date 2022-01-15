@@ -1,0 +1,27 @@
+<component name="libraryTable">
+  <library name="08.IteratorsAndComparators">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/08.IteratorsAndComparators/Lab_04_BookComparator.zip!/" />
+      <root url="jar://$PROJECT_DIR$/08.IteratorsAndComparators/Exercise_01_ListyIterator.zip!/" />
+      <root url="jar://$PROJECT_DIR$/08.IteratorsAndComparators/StrategyPattern.zip!/" />
+      <root url="jar://$PROJECT_DIR$/08.IteratorsAndComparators/ListyIterator.zip!/" />
+      <root url="jar://$PROJECT_DIR$/08.IteratorsAndComparators/Collection.zip!/" />
+      <root url="jar://$PROJECT_DIR$/08.IteratorsAndComparators/Lab_01_Book.zip!/" />
+      <root url="jar://$PROJECT_DIR$/08.IteratorsAndComparators/ComparableBook.zip!/" />
+      <root url="jar://$PROJECT_DIR$/08.IteratorsAndComparators/BookComparator.zip!/" />
+      <root url="jar://$PROJECT_DIR$/08.IteratorsAndComparators/Exercise_03_StackIterator.zip!/" />
+      <root url="jar://$PROJECT_DIR$/08.IteratorsAndComparators/ComparingObjects.zip!/" />
+      <root url="jar://$PROJECT_DIR$/08.IteratorsAndComparators/Library.zip!/" />
+      <root url="jar://$PROJECT_DIR$/08.IteratorsAndComparators/Exercise_05_ComparingObjects.zip!/" />
+      <root url="jar://$PROJECT_DIR$/08.IteratorsAndComparators/Froggy.zip!/" />
+      <root url="jar://$PROJECT_DIR$/08.IteratorsAndComparators/Book.zip!/" />
+      <root url="jar://$PROJECT_DIR$/08.IteratorsAndComparators/Exercise_02_Collection.zip!/" />
+      <root url="jar://$PROJECT_DIR$/08.IteratorsAndComparators/Exercise_04_Froggy.zip!/" />
+      <root url="jar://$PROJECT_DIR$/08.IteratorsAndComparators/Lab_02_Library.zip!/" />
+      <root url="jar://$PROJECT_DIR$/08.IteratorsAndComparators/Lab_03_ComparableBook.zip!/" />
+      <root url="jar://$PROJECT_DIR$/08.IteratorsAndComparators/Exercise_06_StrategyPatern.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

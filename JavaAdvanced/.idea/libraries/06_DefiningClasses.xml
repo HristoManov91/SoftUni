@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="06.DefiningClasses">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/06.DefiningClasses/Lab_03_BankAccount.zip!/" />
+      <root url="jar://$PROJECT_DIR$/06.DefiningClasses/Lab_01_CarInfo.zip!/" />
+      <root url="jar://$PROJECT_DIR$/06.DefiningClasses/Lab_02_Constructors.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

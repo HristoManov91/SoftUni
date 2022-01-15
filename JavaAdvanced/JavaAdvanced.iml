@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/01.StacksAndQueues" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/02.MultidemensionalArrays" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/03.SetsAndMapsAdvanced" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/04.Stream.FilesAndDirectories" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/05.FunctionalProgramming" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/06.DefiningClasses" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/07.Generics" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/08.IteratorsAndComparators" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/09.BasicAlgorithms" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/FinalExam" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Tasks from previous exams" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Workshop" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="07.Generics">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/07.Generics/Exercise_03_GenericSwapMethodString.zip!/" />
+      <root url="jar://$PROJECT_DIR$/07.Generics/Exercise_02_GenericBoxOfInteger.zip!/" />
+      <root url="jar://$PROJECT_DIR$/07.Generics/Exercise_05_GenericCountMethodStrings.zip!/" />
+      <root url="jar://$PROJECT_DIR$/07.Generics/Exercise_06_GenericCountMethodDouble.zip!/" />
+      <root url="jar://$PROJECT_DIR$/07.Generics/Exercise_04_GenericSwapMethodInteger.zip!/" />
+      <root url="jar://$PROJECT_DIR$/07.Generics/Exercise_07_CustomList.zip!/" />
+      <root url="jar://$PROJECT_DIR$/07.Generics/Exercise_08_CustomListSorter.zip!/" />
+      <root url="jar://$PROJECT_DIR$/07.Generics/Exercise_01_GenericBox.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
