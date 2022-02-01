@@ -12,3 +12,4 @@ function sum(num) {
 }
 
 console.log(sum(1).toString())
+console.log(sum(1)(6)(-3).toString())
