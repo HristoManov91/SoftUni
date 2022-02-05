@@ -6,5 +6,4 @@ function notify(message) {
     resultDiv.addEventListener('click', () => {
         resultDiv.style.display = 'none';
     })
-
 }
