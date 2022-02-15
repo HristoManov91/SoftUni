@@ -15,17 +15,14 @@ class SummerCamp {
         if (!this.priceForCamp[condition]) {
             throw new Error("Unsuccessful registration at the camp.");
         }
-        ;
 
         if (this.listOfParticipants.filter(p => p.name === name).length) {
             return `The ${name} is already registered at the camp.`;
         }
-        ;
 
         if (this.priceForCamp[condition] > money) {
             return `The money is not enough to pay the stay at the camp.`;
         }
-        ;
 
         this.listOfParticipants.push({
             name: name,
