@@ -1,20 +1,20 @@
-import {html} from '../../node_modules/lit-html/lit-html.js';
+import {html , nothing} from '../../node_modules/lit-html/lit-html.js';
 import * as albumService from '../services/albumService.js';
 
-const ownerButtonsTemplate = () => html`
+const ownerButtonsTemplate = (albumId) => html`
     <div class="actionBtn">
-        <a href="#" class="edit">Edit</a>
-        <a href="#" class="remove">Delete</a>
+        <a href="/albums/${albumId}/edit" class="edit">Edit</a>
+        <a href="/albums/${albumId}/delete" class="remove">Delete</a>
     </div>
 `;
 
-const detailsTemplate = (album) => html`
+const detailsTemplate = (album , user) => html`
     <section id="detailsPage">
         <div class="wrapper">
             <div class="albumCover">
                 <img src="${album.imgUrl}">
             </div>
-            <div class="albumInfo">
+            <div class="albumInfo"> 
                 <div class="albumText">
 
                     <h1>Name: ${album.name}</h1>
@@ -24,6 +24,7 @@ const detailsTemplate = (album) => html`
                     <h4>Date: ${album.releaseDate}</h4>
                     <p>${album.description}</p>
                 </div>
+                ${user._id === album._ownerId ? ownerButtonsTemplate(album._id) : nothing}
             </div>
         </div>
     </section>
@@ -32,6 +33,6 @@ const detailsTemplate = (album) => html`
 export const detailsView = (ctx) => {
     albumService.getAlbum(ctx.params.albumId)
         .then(album => {
-            ctx.render(detailsTemplate(album));
+            ctx.render(detailsTemplate(album , ctx.user));
         })
 };

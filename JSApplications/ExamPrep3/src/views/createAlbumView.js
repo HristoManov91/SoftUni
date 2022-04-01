@@ -1,5 +1,6 @@
 import {html} from "../../node_modules/lit-html/lit-html.js";
 import * as albumService from '../services/albumService.js';
+import {albumIsInvalid} from "../utils/validators.js";
 
 const createAlbumTemplate = (submitHandler) => html`
     <section class="createPage">
@@ -36,12 +37,6 @@ const createAlbumTemplate = (submitHandler) => html`
         </form>
     </section>
 `;
-
-const albumIsInvalid = (albumData) => {
-    const requiredFields = ['name' , 'imgUrl' , 'price' , 'releaseDate' , 'artist' , 'genre' , 'description'];
-
-    return requiredFields.some(x => !albumData[x]);
-}
 
 export const createAlbumView = (ctx) => {
     const submitHandler = (e) => {
