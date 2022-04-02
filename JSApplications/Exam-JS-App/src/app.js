@@ -5,12 +5,11 @@ import {homeView} from "./views/homeView.js";
 import {loginView} from "./views/loginView.js";
 import {registerView} from "./views/registerView.js";
 import {logoutView} from "./views/logoutView.js";
-import {catalogView} from "./views/catalogView.js";
-import {createAlbumView} from "./views/createAlbumView.js";
+import {dashboardView} from "./views/dashboardView.js";
+import {createView} from "./views/createView.js";
 import {detailsView} from "./views/detailsView.js";
-import {editView} from "./views/editView.js";
 import {deleteView} from "./views/deleteView.js";
-import {searchView} from "./views/searchView.js";
+import {editView} from "./views/editView.js";
 
 page(authMiddleware);
 page(renderNavigationMiddleware);
@@ -20,12 +19,10 @@ page('/', homeView);
 page('/login', loginView);
 page('/register' , registerView);
 page('/logout' , logoutView);
-page('/catalog', catalogView);
-page('/create', createAlbumView);
-page('/search', searchView);
-page('/albums/:albumId', detailsView);
-page('/albums/:albumId/edit' , editView);
-page('/albums/:albumId/delete' , deleteView);
+page('/dashboard' , dashboardView);
+page('/create' , createView);
+page('/pets/:animalId' , detailsView);
+page('/pets/:animalId/edit' , editView);
+page('/pets/:animalId/delete' , deleteView)
 
 page.start();
-
